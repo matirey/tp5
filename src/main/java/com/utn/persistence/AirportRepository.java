@@ -1,0 +1,18 @@
+package com.utn.persistence;
+
+import com.utn.models.Airport;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * Created by Marcosp on 2/6/2018.
+ */
+@Repository
+public interface AirportRepository extends CrudRepository<Airport, Long> {
+
+    Airport findAirportById(long id);
+
+    List<Airport> findAirportByCity(long idcity);
+}

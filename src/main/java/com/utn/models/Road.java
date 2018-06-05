@@ -30,6 +30,9 @@ public class Road {
     @Column(name = "distance", columnDefinition = "int", nullable = false)
     private long distance;
 
+    @OneToMany(mappedBy = "idroad")
+    private List<CabinsForRoad> cabinsforroadList;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "airportorigin_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

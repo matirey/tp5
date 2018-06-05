@@ -3,6 +3,8 @@ package com.utn.models;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -22,11 +24,12 @@ public class CabinsForRoad {
     @Column(name = "idcabinforroad")
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="road_id")
-    public Road road;
-
-    @ManyToOne
-    @JoinColumn(name="cabins_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cabins_fk")
     public Cabins cabin;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "road_fk", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Road road;
 }

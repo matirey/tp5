@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 
 /**
  * Created by Marcosp on 23/5/2018.
@@ -17,18 +18,24 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "prices")
 public class Prices {
 
-    @EmbeddedId
-    private PricesId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idprice")
+    private long id;
 
     @NotEmpty(message = "Price is required.")
     @Column(name = "price")
     private Float price;
 
     @ManyToOne
-    @JoinColumn(name="vigency_id")
-    public Vigency vigency;
-
-    @ManyToOne
     @JoinColumn(name="cabinsforroad_id")
     public CabinsForRoad cabinsforroad;
+
+    @NotEmpty(message = "Year is required.")
+    @Column(name = "year")
+    private int year;
+
+    @NotEmpty(message = "Month is required.")
+    @Column(name = "month")
+    private int month;
 }

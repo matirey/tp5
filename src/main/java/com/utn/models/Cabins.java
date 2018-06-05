@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * Created by Marcosp on 23/5/2018.
@@ -25,4 +26,7 @@ public class Cabins {
     @NotEmpty(message = "Name is required.")
     @Column(name = "name", columnDefinition = "varchar(10)", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "idcabin")
+    private List<CabinsForRoad> cabinsforroadList;
 }
