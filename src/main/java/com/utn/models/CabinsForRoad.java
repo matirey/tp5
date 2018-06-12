@@ -26,6 +26,7 @@ public class CabinsForRoad {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cabins_fk")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Cabins cabin;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -41,8 +41,8 @@ public class Airport {
     @Column(name = "lon", columnDefinition = "varchar(10)", nullable = false)
     private String longitude;
 
-    @OneToMany(mappedBy = "airport")
-    private List<Road> roadList;
+   /* @OneToMany(mappedBy = "airport")
+    private List<Road> roadList;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_fk", nullable = false)

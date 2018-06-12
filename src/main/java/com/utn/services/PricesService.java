@@ -19,7 +19,7 @@ public class PricesService {
     }
 
     public Prices BuscarXCabinsYYearYMonth(long id, int year, int month){
-        return repositorio.findPricesByCabinsforroadAAndYearAndMonth(id, year, month);
+        return repositorio.findPricesByCabinsforroadAndYearAndMonth(id, year, month);
     }
 
     // Guardar

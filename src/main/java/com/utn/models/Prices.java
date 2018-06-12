@@ -3,6 +3,8 @@ package com.utn.models;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -27,8 +29,9 @@ public class Prices {
     @Column(name = "price")
     private Float price;
 
-    @ManyToOne
-    @JoinColumn(name="cabinsforroad_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cabinsforroad_fk", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public CabinsForRoad cabinsforroad;
 
     @NotEmpty(message = "Year is required.")

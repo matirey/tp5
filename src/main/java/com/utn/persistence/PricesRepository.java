@@ -14,5 +14,5 @@ public interface PricesRepository extends CrudRepository<Prices, Long>  {
 
     Prices findPricesById(long id);
 
-    Prices findPricesByCabinsforroadAAndYearAndMonth(long idcabinsforroad, int year, int month);
+    Prices findPricesByCabinsforroadAndYearAndMonth(long idcabinsforroad, int year, int month);
 }

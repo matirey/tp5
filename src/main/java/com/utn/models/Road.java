@@ -30,7 +30,7 @@ public class Road {
     @Column(name = "distance", columnDefinition = "int", nullable = false)
     private long distance;
 
-    @OneToMany(mappedBy = "idroad")
+    @OneToMany(mappedBy = "road")
     private List<CabinsForRoad> cabinsforroadList;
 
     @ManyToOne(fetch = FetchType.LAZY)
