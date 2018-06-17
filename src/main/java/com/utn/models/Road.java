@@ -1,5 +1,6 @@
 package com.utn.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import java.util.List;
 public class Road {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idroad", nullable = false)
     private long id;

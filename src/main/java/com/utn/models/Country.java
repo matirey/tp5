@@ -1,5 +1,6 @@
 package com.utn.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import java.util.List;
 public class Country {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idcountry", nullable = false)
     private long id;

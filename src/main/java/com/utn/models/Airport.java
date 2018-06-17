@@ -1,7 +1,9 @@
 package com.utn.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -17,10 +19,12 @@ import java.util.List;
 @Table(name = "airports", uniqueConstraints = {@UniqueConstraint(columnNames = {"iataCode"})})
 @Getter
 @Setter
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Airport {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idairport", nullable = false)
     private long id;

@@ -12,7 +12,14 @@ import java.util.List;
 @Repository
 public interface AirportRepository extends CrudRepository<Airport, Long> {
 
-    Airport findAirportById(long id);
+    //List<Airport> findAll();
 
-    List<Airport> findAirportByCity(long idcity);
+    Airport findAirportByIataCode(String iatacode);
+
+    List<Airport> findAirportsByCity_NameAndCity_State_NameAndCity_State_Country_Name(String city, String state, String country);
+
+    List<Airport> findAirportByCity_State_NameAndCity_State_Country_Name(String stateName, String countryName);
+
+    List<Airport> findAirportsByCity_State_Country_Name(String country);
+
 }

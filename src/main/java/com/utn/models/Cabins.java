@@ -1,5 +1,6 @@
 package com.utn.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.util.List;
 public class Cabins {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idcabin")
     private long id;

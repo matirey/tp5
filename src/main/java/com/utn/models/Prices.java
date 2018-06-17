@@ -1,5 +1,6 @@
 package com.utn.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import java.util.Date;
 public class Prices {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idprice")
     private long id;
