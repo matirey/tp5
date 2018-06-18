@@ -1,10 +1,8 @@
 package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,10 +15,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "airports", uniqueConstraints = {@UniqueConstraint(columnNames = {"iataCode"})})
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Airport {
 
     @Id
