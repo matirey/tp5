@@ -1,5 +1,6 @@
 package com.utn.services;
 
+import com.utn.models.Airport;
 import com.utn.models.City;
 import com.utn.persistence.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +15,21 @@ import java.util.List;
 public class CityService {
 
     @Autowired
-    private CityRepository repositorio;
+    private CityRepository repository;
 
-    public City BuscarXID(long id){
-        return repositorio.findCitiesById(id);
-    }
+    public void saveAirport(String citycode, String airportcode){
 
-    public List<City> BuscarXState(long id){
-        return repositorio.findCitiesByState(id);
     }
 
     // Guardar
-    public void  save(City reg){
-        repositorio.save(reg);
+    public void  save(City city){
+        repository.save(city);
     }
 
     // Borrar en cascada
     public void delete(City city)
     {
-        repositorio.delete(city);
+        repository.delete(city);
     }
 
 }

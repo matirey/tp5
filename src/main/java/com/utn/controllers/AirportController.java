@@ -49,4 +49,27 @@ public class AirportController {
         }
     }
 
+    @PostMapping("/add")
+    public ResponseEntity SaveAirport(@RequestHeader (value="name") String name, @RequestHeader (value="pass") String pass,
+                                      @RequestHeader (value="iatacode") String iatacode,
+                                      @RequestHeader (value="city-code") String citycode,
+                                      @RequestHeader (value="state-code") String statecode,
+                                      @RequestHeader (value="country-code") String countrycode,
+                                      @RequestHeader (value="lat") String lat, @RequestHeader (value="lon") String lon){
+        Airport airport = new Airport();
+        airport.setName(name);
+        airport.setIataCode(iatacode);
+        airport.setLatitude(lat);
+        airport.setLongitude(lon);
+        try {
+            //verificar password tambien para poder añadir
+            airportService.save(airport);
+            //cityService.saveAirport(citycode,iatacode);
+            //statecode.saveAirport(statecode,)
+            return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
