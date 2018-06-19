@@ -1,6 +1,7 @@
 package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,9 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "cities", uniqueConstraints = {@UniqueConstraint(columnNames = {"iataCode"})})
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class City {
 
     @Id

@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CityRepository extends CrudRepository<City, Long>  {
 
-    City findCitiesById(long id);
+    City findCityByIataCode(String iatacode);
 
     List<City> findCitiesByState(long idstate);
 }
