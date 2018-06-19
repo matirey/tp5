@@ -14,35 +14,28 @@ import java.util.List;
 public class AirportService {
 
     @Autowired
-    private AirportRepository repositorio;
+    private AirportRepository repository;
 
     public Airport findByIataCode(String iatacode){
-        return repositorio.findAirportByIataCode(iatacode);
+        return repository.findAirportByIataCode(iatacode);
     }
 
     public List<Airport> findByCountry(String countryName){
-        return repositorio.findAirportsByCity_State_Country_Name(countryName);
+        return repository.findAirportsByCity_State_Country_Name(countryName);
     }
 
-    public List<Airport> findByCountryState(String stateName, String countryName){
-        return repositorio.findAirportByCity_State_NameAndCity_State_Country_Name(stateName,countryName);
-    }
 
-    public List<Airport> findByCountryStateCity(String city,String state, String country){
-        return repositorio.findAirportsByCity_NameAndCity_State_NameAndCity_State_Country_Name(country,state,city);
-    }
-
-    public Iterable<Airport> findall(){
-        return repositorio.findAll();
+    public List<Airport> findall(){
+        return repository.findAll();
     }
 
     public void  save(Airport airport){
-        repositorio.save(airport);
+        repository.save(airport);
     }
 
     // cascade delete
     public void delete(Airport airport)
     {
-        repositorio.delete(airport);
+        repository.delete(airport);
     }
 }

@@ -17,9 +17,7 @@ public class CityService {
     @Autowired
     private CityRepository repository;
 
-    public void saveAirport(String citycode, String airportcode){
-
-    }
+    public City findCityByIataCode(String iatacode){return repository.findCityByIataCode(iatacode);}
 
     // Guardar
     public void  save(City city){
