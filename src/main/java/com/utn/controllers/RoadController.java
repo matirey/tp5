@@ -25,7 +25,7 @@ public class RoadController {
     @Autowired
     RoadService roadService;
 
-    @GetMapping("/{iata}")
+    @GetMapping(value="/{iata}", consumes = "application/json", produces = "application/json")
     public @ResponseBody ResponseEntity<List<Road>> GetRoadsByIata(@PathVariable ("iata") String iata ) {
         List<Road> list = roadService.FindByOrigin(iata);
         if (list.size()>0) {
