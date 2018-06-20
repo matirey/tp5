@@ -1,10 +1,8 @@
 package com.utn.controllers;
 
-import com.utn.models.Airport;
 import com.utn.request.RoadReq;
 import com.utn.models.Road;
 import com.utn.services.RoadService;
-import com.utn.services.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/roads")
 public class RoadController {
-
-    @Autowired
-    AirportService airportService;
 
     @Autowired
     RoadService roadService;
