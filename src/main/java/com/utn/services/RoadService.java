@@ -1,6 +1,7 @@
 package com.utn.services;
 
 import com.utn.models.Road;
+import com.utn.Utils.Haversine;
 import com.utn.persistence.RoadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,29 +15,29 @@ import java.util.List;
 public class RoadService {
 
     @Autowired
-    private RoadRepository repositorio;
+    private RoadRepository repository;
 
-    public Road BuscarXID(long id){
-        return repositorio.findRoadById(id);
+    public Road FindByID(long id){
+        return repository.findRoadById(id);
     }
 
-    public Road BuscarXOrigenYDestino(long idorigen, long iddestino){
-        return repositorio.findRoadByAirportoriginAndAirportdestiny(idorigen, iddestino);
+    public Road FindByOriginAndDestiny(long idorigen, long iddestino){
+        return repository.findRoadByAirportoriginAndAirportdestiny(idorigen, iddestino);
     }
 
-    public List<Road> BuscarXOrigen(long id){
-        return repositorio.findRoadByAirportorigin(id);
+    public List<Road> FindByOrigin(String iataCode){
+        return repository.findRoadByAirportorigin_IataCode(iataCode);
     }
 
     // Guardar
     public void  save(Road reg){
-        repositorio.save(reg);
+        repository.save(reg);
     }
 
     // Borrar en cascada
     public void delete(Road road)
     {
-        repositorio.delete(road);
+        repository.delete(road);
     }
 
 }
