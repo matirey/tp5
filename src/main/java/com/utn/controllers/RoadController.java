@@ -1,6 +1,7 @@
 package com.utn.controllers;
 
 import com.utn.models.Airport;
+import com.utn.request.RoadReq;
 import com.utn.models.Road;
 import com.utn.services.RoadService;
 import com.utn.services.AirportService;
@@ -35,25 +36,13 @@ public class RoadController {
     }
 
     @PostMapping("/road")
-    public ResponseEntity SaveRoad(@RequestHeader (value="iataCodeOrigin") String iataCodeOrigin,
-                                   @RequestHeader (value="iataCodeDestiny") String iataCodeDestiny,
-                                   @RequestHeader (value="iatacode") String iatacode,
-                                   @RequestHeader (value="city-code") String citycode,
-                                   @RequestHeader (value="country-code") String countrycode,
-                                   @RequestHeader (value="lat") String lat, @RequestHeader (value="lon") String lon){
-        Airport airport = new Airport();
-        airport.setName(name);
-        airport.setIataCode(iatacode);
-        airport.setLatitude(lat);
-        airport.setLongitude(lon);
+    public ResponseEntity SaveRoad(@RequestBody RoadReq request){
         try {
-            //verificar password tambien para poder añadir
-            airport.setCity(cityService.findCityByIataCode(citycode));
-            airportService.save(airport);
-            //statecode.saveAirport(statecode,)
-            return new ResponseEntity <>(airport, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            roadService.save(request.getOrigin(), request.getDestiny());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

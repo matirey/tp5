@@ -29,8 +29,8 @@ public class Road {
     private long id;
 
     @NotEmpty(message = "Distance is required.")
-    @Column(name = "distance", columnDefinition = "int", nullable = false)
-    private long distance;
+    @Column(name = "distance", columnDefinition = "double(10,2)", nullable = false)
+    private double distance;
 
     @OneToMany(mappedBy = "road")
     private List<CabinsForRoad> cabinsforroadList;
