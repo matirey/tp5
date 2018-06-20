@@ -20,17 +20,21 @@ public class CountryService {
         return repository.findCountryByIsoCode(isocode);
     }
 
-    // Guardar
-    public void  save(Country country){
+    public void save(Country country){
         repository.save(country);
     }
 
-    // Traer todo
+    public void save(String name, String isocode){
+        Country country = new Country();
+        country.setName(name);
+        country.setIsoCode(isocode);
+        repository.save(country);
+    }
+
     public List<Country> findAll(){
         return repository.findAll();
     }
 
-    // Borrar en cascada
     public void delete(Country country)
     {
         repository.delete(country);

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
+
 /**
  * Created by Matias on 18/06/2018.
  */
@@ -26,13 +28,10 @@ public class LocationsController {
     CountryService countryService;
 
     @PostMapping(value="/country", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<LocationReq> SaveCountry(@RequestBody LocationReq request){
-        Country country = new Country();
-        country.setName(request.getName());
-        country.setIsoCode(request.getIsoCode());
+    public ResponseEntity SaveCountry(@RequestBody LocationReq request){
         try{
-            countryService.save(country);
-            return new ResponseEntity<>(request,HttpStatus.CREATED);
+            countryService.save(request.getName(),request.getIsoCode());
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,5 +57,10 @@ public class LocationsController {
         catch (Exception e){
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/city")
+    public ResponseEntity SaveCity(@RequestBody LocationReq request){
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
