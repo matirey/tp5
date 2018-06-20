@@ -36,5 +36,5 @@ public class Country {
 
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "country")
-    private List<State> stateList;
+    private List<City> cityList;
 }

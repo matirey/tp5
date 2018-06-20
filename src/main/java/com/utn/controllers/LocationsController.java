@@ -5,13 +5,10 @@ import com.utn.models.Country;
 import com.utn.request.LocationReq;
 import com.utn.services.CityService;
 import com.utn.services.CountryService;
-import com.utn.services.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.ws.Response;
 
 /**
  * Created by Matias on 18/06/2018.

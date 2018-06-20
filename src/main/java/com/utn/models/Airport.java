@@ -34,12 +34,12 @@ public class Airport {
     private String iataCode;
 
     @NotEmpty(message = "Latitude is required")
-    @Column(name = "lat", columnDefinition = "varchar(10)", nullable = false)
-    private String latitude;
+    @Column(name = "lat", columnDefinition = "double(10,2)", nullable = false)
+    private double latitude;
 
     @NotEmpty(message = "Longitude is required")
-    @Column(name = "lon", columnDefinition = "varchar(10)", nullable = false)
-    private String longitude;
+    @Column(name = "lon", columnDefinition = "double(10,2)", nullable = false)
+    private double longitude;
 
    /* @OneToMany(mappedBy = "airport")
     private List<Road> roadList;*/

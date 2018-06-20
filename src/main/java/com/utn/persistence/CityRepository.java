@@ -14,5 +14,5 @@ public interface CityRepository extends CrudRepository<City, Long>  {
 
     City findCityByIataCode(String iatacode);
 
-    List<City> findCitiesByState(long idstate);
+    List<City> findCitiesByCountry(long idstate);
 }

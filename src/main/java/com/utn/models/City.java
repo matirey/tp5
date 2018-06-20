@@ -2,9 +2,6 @@ package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -34,11 +31,15 @@ public class City {
     @Column(name = "iataCode", columnDefinition = "varchar(3)", unique = true, nullable = false)
     private String iataCode;
 
+    @NotEmpty(message = "State is required.")
+    @Column(name = "state", columnDefinition = "varchar(40)", nullable = false)
+    private String state;
+
     @OneToMany(mappedBy = "city")
     private List<Airport> airportList;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "state_fk", nullable = false)
+    @JoinColumn(name = "country_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private State state;
+    private Country country;
 }
