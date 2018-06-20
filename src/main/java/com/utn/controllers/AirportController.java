@@ -36,7 +36,7 @@ public class AirportController {
                                       @RequestHeader (value="iatacode") String iatacode,
                                       @RequestHeader (value="city-code") String citycode,
                                       @RequestHeader (value="country-code") String countrycode,
-                                      @RequestHeader (value="lat") String lat, @RequestHeader (value="lon") String lon){
+                                      @RequestHeader (value="lat") Double lat, @RequestHeader (value="lon") Double lon){
         Airport airport = new Airport();
         airport.setName(name);
         airport.setIataCode(iatacode);

@@ -21,7 +21,7 @@ public class AirportService {
     }
 
     public List<Airport> findByCountry(String countryName){
-        return repository.findAirportsByCity_State_Country_Name(countryName);
+        return repository.findAirportsByCity_Country_Name(countryName);
     }
 
 
