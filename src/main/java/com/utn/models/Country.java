@@ -1,6 +1,7 @@
 package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -23,10 +24,12 @@ public class Country {
     @Column(name = "idcountry", nullable = false)
     private long id;
 
+    @JsonProperty
     @NotEmpty(message = "Name is required.")
     @Column(name = "name", columnDefinition = "varchar(100)", nullable = false)
     private String name;
 
+    @JsonProperty
     @NotEmpty(message = "isoCode is required.")
     @Column(name = "isoCode", columnDefinition = "varchar(2)", unique = true, nullable = false)
     private String isoCode;

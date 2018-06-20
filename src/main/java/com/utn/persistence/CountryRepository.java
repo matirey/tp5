@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CountryRepository extends CrudRepository<Country, Long>  {
 
-    Country findCountryById(long id);
+    Country findCountryByIsoCode(String isocode);
 
     List<Country> findAll();
 
