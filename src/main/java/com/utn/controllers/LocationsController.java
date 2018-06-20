@@ -22,8 +22,7 @@ public class LocationsController {
 
     @Autowired
     CityService cityService;
-    @Autowired
-    StateService stateService;
+
     @Autowired
     CountryService countryService;
 
@@ -61,6 +60,8 @@ public class LocationsController {
 
     @PostMapping("/city")
     public ResponseEntity SaveCity(@RequestBody LocationReq request){
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        try{
+            cityService.save(request.getName(),request.getIataCode());
+        }
     }
 }

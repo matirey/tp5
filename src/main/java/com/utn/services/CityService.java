@@ -19,11 +19,14 @@ public class CityService {
 
     public City findCityByIataCode(String iatacode){return repository.findCityByIataCode(iatacode);}
 
-    // Guardar
-    public void  save(City city){
+    public void save(City city){
         repository.save(city);
     }
 
+    public void save(String name, String iatacode, ){
+        City city = new City();
+
+    }
     // Borrar en cascada
     public void delete(City city)
     {
