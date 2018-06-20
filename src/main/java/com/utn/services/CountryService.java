@@ -14,25 +14,25 @@ import java.util.List;
 public class CountryService {
 
     @Autowired
-    private CountryRepository repositorio;
+    private CountryRepository repository;
 
-    public Country BuscarXID(long id){
-        return repositorio.findCountryById(id);
+    public Country findCountryByIsoCode(String isocode){
+        return repository.findCountryByIsoCode(isocode);
     }
 
     // Guardar
-    public void  save(Country reg){
-        repositorio.save(reg);
+    public void  save(Country country){
+        repository.save(country);
     }
 
     // Traer todo
     public List<Country> findAll(){
-        return repositorio.findAll();
+        return repository.findAll();
     }
 
     // Borrar en cascada
     public void delete(Country country)
     {
-        repositorio.delete(country);
+        repository.delete(country);
     }
 }
