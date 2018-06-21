@@ -1,6 +1,7 @@
 package com.utn.controllers;
 
 import com.utn.models.Airport;
+import com.utn.request.AirportReq;
 import com.utn.services.AirportService;
 import com.utn.services.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,22 +32,17 @@ public class AirportController {
         }
     }
 
-    @PostMapping("/airport")
-    public ResponseEntity SaveAirport(@RequestHeader (value="name") String name, @RequestHeader (value="pass") String pass,
-                                      @RequestHeader (value="iatacode") String iatacode,
-                                      @RequestHeader (value="city-code") String citycode,
-                                      @RequestHeader (value="country-code") String countrycode,
-                                      @RequestHeader (value="lat") Double lat, @RequestHeader (value="lon") Double lon){
+    @PostMapping(value="/airport", consumes = "application/json", produces = "application/json")
+    public ResponseEntity SaveAirport(@RequestBody AirportReq request){
         Airport airport = new Airport();
-        airport.setName(name);
-        airport.setIataCode(iatacode);
-        airport.setLatitude(lat);
-        airport.setLongitude(lon);
+        airport.setName(request.getName());
+        airport.setIataCode(request.getIataCode());
+        airport.setLatitude(request.getLatitude());
+        airport.setLongitude(request.getLongitude());
         try {
             //verificar password tambien para poder añadir
-            airport.setCity(cityService.findCityByIataCode(citycode));
+            airport.setCity(cityService.findCityByIataCode(request.getCityCode()));
             airportService.save(airport);
-            //statecode.saveAirport(statecode,)
             return new ResponseEntity <>(airport, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);

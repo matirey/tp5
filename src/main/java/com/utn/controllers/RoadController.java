@@ -1,10 +1,8 @@
 package com.utn.controllers;
 
-import com.utn.models.Airport;
 import com.utn.request.RoadReq;
 import com.utn.models.Road;
 import com.utn.services.RoadService;
-import com.utn.services.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +18,9 @@ import java.util.List;
 public class RoadController {
 
     @Autowired
-    AirportService airportService;
-
-    @Autowired
     RoadService roadService;
 
-    @GetMapping("/{iata}")
+    @GetMapping(value="/{iata}", consumes = "application/json", produces = "application/json")
     public @ResponseBody ResponseEntity<List<Road>> GetRoadsByIata(@PathVariable ("iata") String iata ) {
         List<Road> list = roadService.FindByOrigin(iata);
         if (list.size()>0) {
