@@ -1,7 +1,9 @@
 package com.utn.services;
 
 import com.utn.models.Airport;
+import com.utn.models.City;
 import com.utn.persistence.AirportRepository;
+import com.utn.wrappers.AirportWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +22,6 @@ public class AirportService {
         return repository.findAirportByIataCode(iatacode);
     }
 
-    public List<Airport> findByCountry(String countryName){
-        return repository.findAirportsByCity_Country_Name(countryName);
-    }
-
-
     public List<Airport> findall(){
         return repository.findAll();
     }
@@ -33,6 +30,15 @@ public class AirportService {
         repository.save(airport);
     }
 
+    public void save(String name,String iatacode, double lat, double lon, City city){
+        Airport airport = new Airport();
+        airport.setName(name);
+        airport.setIataCode(iatacode);
+        airport.setLatitude(lat);
+        airport.setLongitude(lon);
+        airport.setCity(city);
+        repository.save(airport);
+    }
     // cascade delete
     public void delete(Airport airport)
     {

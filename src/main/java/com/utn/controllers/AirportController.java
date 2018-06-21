@@ -1,9 +1,10 @@
 package com.utn.controllers;
 
 import com.utn.models.Airport;
-import com.utn.request.AirportReq;
+import com.utn.models.City;
 import com.utn.services.AirportService;
 import com.utn.services.CityService;
+import com.utn.wrappers.AirportWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,47 +16,45 @@ import java.util.List;
  * Created by Matias on 14/06/2018.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/airports")
 public class AirportController {
     @Autowired
     AirportService airportService;
     @Autowired
     CityService cityService;
 
-    @GetMapping("/{country}")
-    public @ResponseBody ResponseEntity<List<Airport>> findByCountry(@PathVariable ("country") String country ){
-        List<Airport> list = airportService.findByCountry(country);
-        if (list.size()>0) {
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
 
-    @PostMapping(value="/airport", consumes = "application/json", produces = "application/json")
-    public ResponseEntity SaveAirport(@RequestBody AirportReq request){
-        Airport airport = new Airport();
-        airport.setName(request.getName());
-        airport.setIataCode(request.getIataCode());
-        airport.setLatitude(request.getLatitude());
-        airport.setLongitude(request.getLongitude());
+    @PostMapping(value="", consumes = "application/json", produces = "application/json")
+    public ResponseEntity SaveAirport(@RequestBody AirportWrapper request){
         try {
-            //verificar password tambien para poder añadir
-            airport.setCity(cityService.findCityByIataCode(request.getCityCode()));
-            airportService.save(airport);
-            return new ResponseEntity <>(airport, HttpStatus.CREATED);
+            airportService.save(request.getName(),request.getIataCode(),request.getLatitude(),
+                    request.getLongitude(),cityService.findCityByIataCode(request.getCityCode()));
+            return new ResponseEntity <>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/airports")
+    @GetMapping("")
     public @ResponseBody ResponseEntity<List<Airport>> findAll(){
         List<Airport> list = airportService.findall();
         if (list.size()>0) {
             return new ResponseEntity<>(list, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping("/{iatacode}")
+    public @ResponseBody ResponseEntity<AirportWrapper> findAirportByIataCode(@RequestBody AirportWrapper request){
+        try{
+            Airport airport= airportService.findByIataCode(request.getIataCode());
+            AirportWrapper airportWrapper = new AirportWrapper(airport.getName(),airport.getIataCode(),airport.getLatitude(),
+                    airport.getLongitude(),airport.getCity().getIataCode());
+            return new ResponseEntity<>(airportWrapper,HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

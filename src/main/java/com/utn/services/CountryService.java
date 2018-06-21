@@ -21,10 +21,6 @@ public class CountryService {
         return repository.findCountryByIsoCode(isocode);
     }
 
-    public void save(Country country){
-        repository.save(country);
-    }
-
     public void save(String name, String isocode){
         Country country = new Country();
         country.setName(name);

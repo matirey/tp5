@@ -17,6 +17,7 @@ import java.util.List;
 @Table(name = "airports", uniqueConstraints = {@UniqueConstraint(columnNames = {"iataCode"})})
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Airport {
 
     @Id
