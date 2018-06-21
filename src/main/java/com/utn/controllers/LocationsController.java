@@ -2,9 +2,10 @@ package com.utn.controllers;
 
 import com.utn.models.City;
 import com.utn.models.Country;
-import com.utn.request.LocationReq;
 import com.utn.services.CityService;
 import com.utn.services.CountryService;
+import com.utn.wrappers.CityWrapper;
+import com.utn.wrappers.CountryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class LocationsController {
     CountryService countryService;
 
     @PostMapping(value="/country", consumes = "application/json", produces = "application/json")
-    public ResponseEntity SaveCountry(@RequestBody LocationReq request){
+    public ResponseEntity SaveCountry(@RequestBody CountryWrapper request){
         try{
             countryService.save(request.getName(),request.getIsoCode());
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -34,31 +35,47 @@ public class LocationsController {
         }
     }
 
-    @GetMapping("/{code}")
-    public @ResponseBody ResponseEntity<Object> getLocationByCode(@PathVariable (value = "code") String code){
-        code=code.replace(" ","");
+    @GetMapping(value="/country/{isocode}", produces = "application/json")
+    public @ResponseBody ResponseEntity<CountryWrapper> getLocationByCode(@PathVariable (value = "isocode") String isocode){
         try {
-            Country country = countryService.findCountryByIsoCode(code);
-            if(!country.equals(null)){
-                return new ResponseEntity<>(country,HttpStatus.OK);
+            Country country = countryService.findCountryByIsoCode(isocode);
+            if (!country.equals(null)) {
+                return new ResponseEntity<>(new CountryWrapper(country.getName(),country.getIsoCode()), HttpStatus.OK);
             }
-            else{
-                City city= cityService.findCityByIataCode(code);
-                if (!city.equals(null)) {
-                return new ResponseEntity<>(city,HttpStatus.OK);
-                }
+            else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        catch (Exception e){
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/city")
-    public ResponseEntity SaveCity(@RequestBody LocationReq request){
+    public ResponseEntity SaveCity(@RequestBody CityWrapper request){
         try{
-            cityService.save(request.getName(),request.getIataCode());
+            cityService.save(request.getName(),request.getIataCode(),request.getState(),
+                    countryService.findCountryByIsoCode(request.getIsoCode()));
+            return new ResponseEntity(HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/city/{iatacode}")
+    public ResponseEntity<CityWrapper> findCityByIataCode(@PathVariable (value="iatacode") String iatacode ){
+        try{
+            City city = cityService.findCityByIataCode(iatacode);
+            if (!city.equals(null)) {
+                CityWrapper cityWrapper= new CityWrapper(city.getName(),city.getIataCode(),city.getState(),city.getCountry().getIsoCode());
+                return new ResponseEntity<>(cityWrapper,HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

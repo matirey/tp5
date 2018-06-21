@@ -2,6 +2,7 @@ package com.utn.services;
 
 import com.utn.models.Airport;
 import com.utn.models.City;
+import com.utn.models.Country;
 import com.utn.persistence.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,15 @@ public class CityService {
         repository.save(city);
     }
 
-    public void save(String name, String iatacode, ){
+    public City save(String name, String iatacode, String state, Country country){
         City city = new City();
-
+        city.setName(name);
+        city.setIataCode(iatacode);
+        city.setState(state);
+        city.setCountry(country);
+        return repository.save(city);
     }
-    // Borrar en cascada
+
     public void delete(City city)
     {
         repository.delete(city);
