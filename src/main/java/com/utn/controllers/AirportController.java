@@ -26,6 +26,8 @@ public class AirportController {
 
     @PostMapping(value="", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveAirport(@RequestBody AirportWrapper request){
+        System.out.println(request.getLongitude() + " latitude");
+        System.out.println(cityService.findCityByIataCode(request.getCityCode()).getName());
         try {
             airportService.save(request.getName(),request.getIataCode(),request.getLatitude(),
                     request.getLongitude(),cityService.findCityByIataCode(request.getCityCode()));
