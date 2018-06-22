@@ -34,11 +34,9 @@ public class Airport {
     @Column(name = "iataCode", columnDefinition = "varchar(3)", unique = true, nullable = false)
     private String iataCode;
 
-    @NotEmpty(message = "Latitude is required")
     @Column(name = "lat", columnDefinition = "double(10,2)", nullable = false)
     private double latitude;
 
-    @NotEmpty(message = "Longitude is required")
     @Column(name = "lon", columnDefinition = "double(10,2)", nullable = false)
     private double longitude;
 

@@ -48,9 +48,9 @@ public class AirportController {
     }
 
     @GetMapping("/{iatacode}")
-    public @ResponseBody ResponseEntity<AirportWrapper> findAirportByIataCode(@RequestBody AirportWrapper request){
+    public @ResponseBody ResponseEntity<AirportWrapper> findAirportByIataCode(@PathVariable (value="iatacode")String iatacode){
         try{
-            Airport airport= airportService.findByIataCode(request.getIataCode());
+            Airport airport= airportService.findByIataCode(iatacode);
             AirportWrapper airportWrapper = new AirportWrapper(airport.getName(),airport.getIataCode(),airport.getLatitude(),
                     airport.getLongitude(),airport.getCity().getIataCode());
             return new ResponseEntity<>(airportWrapper,HttpStatus.OK);

@@ -31,12 +31,13 @@ public class AirportService {
     }
 
     public void save(String name,String iatacode, double lat, double lon, City city){
-        System.out.printf(lat + " " + lon);
         Airport airport = new Airport();
         airport.setName(name);
         airport.setIataCode(iatacode);
         airport.setLatitude(lat);
         airport.setLongitude(lon);
+        System.out.printf(airport.getLatitude() + " latitude");
+        System.out.printf(airport.getLongitude() +" Longitude");
         airport.setCity(city);
         repository.save(airport);
     }
