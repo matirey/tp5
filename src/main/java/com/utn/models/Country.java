@@ -33,8 +33,4 @@ public class Country {
     @NotEmpty(message = "isoCode is required.")
     @Column(name = "isoCode", columnDefinition = "varchar(2)", unique = true, nullable = false)
     private String isoCode;
-
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @OneToMany(mappedBy = "country")
-    private List<City> cityList;
 }

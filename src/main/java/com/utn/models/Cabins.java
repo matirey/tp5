@@ -29,6 +29,4 @@ public class Cabins {
     @Column(name = "name", columnDefinition = "varchar(10)", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "cabin")
-    private List<CabinsForRoad> cabinsforroadList;
 }

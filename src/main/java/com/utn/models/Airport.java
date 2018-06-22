@@ -40,10 +40,7 @@ public class Airport {
     @Column(name = "lon", columnDefinition = "double(10,2)", nullable = false)
     private double longitude;
 
-   /* @OneToMany(mappedBy = "airport")
-    private List<Road> roadList;*/
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private City city;

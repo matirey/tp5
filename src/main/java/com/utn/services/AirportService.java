@@ -36,8 +36,6 @@ public class AirportService {
         airport.setIataCode(iatacode);
         airport.setLatitude(lat);
         airport.setLongitude(lon);
-        System.out.printf(airport.getLatitude() + " latitude");
-        System.out.printf(airport.getLongitude() +" Longitude");
         airport.setCity(city);
         repository.save(airport);
     }

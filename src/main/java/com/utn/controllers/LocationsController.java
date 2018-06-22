@@ -36,11 +36,11 @@ public class LocationsController {
     }
 
     @GetMapping(value="/country/{isocode}", produces = "application/json")
-    public @ResponseBody ResponseEntity<CountryWrapper> getLocationByCode(@PathVariable (value = "isocode") String isocode){
+    public @ResponseBody ResponseEntity<Country> getLocationByCode(@PathVariable (value = "isocode") String isocode){
         try {
             Country country = countryService.findCountryByIsoCode(isocode);
             if (!country.equals(null)) {
-                return new ResponseEntity<>(new CountryWrapper(country.getName(),country.getIsoCode()), HttpStatus.OK);
+                return new ResponseEntity<>(country, HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -62,13 +62,12 @@ public class LocationsController {
         }
     }
 
-    @GetMapping("/city/{iatacode}")
-    public ResponseEntity<CityWrapper> findCityByIataCode(@PathVariable (value="iatacode") String iatacode ){
+    @GetMapping(value="/city/{iatacode}", produces = "application/json")
+    public ResponseEntity<City> findCityByIataCode(@PathVariable (value="iatacode") String iatacode ){
         try{
             City city = cityService.findCityByIataCode(iatacode);
             if (!city.equals(null)) {
-                CityWrapper cityWrapper= new CityWrapper(city.getName(),city.getIataCode(),city.getState(),city.getCountry().getIsoCode());
-                return new ResponseEntity<>(cityWrapper,HttpStatus.OK);
+                return new ResponseEntity<>(city,HttpStatus.OK);
             }
             else{
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

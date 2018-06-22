@@ -48,12 +48,15 @@ public class AirportController {
     }
 
     @GetMapping("/{iatacode}")
-    public @ResponseBody ResponseEntity<AirportWrapper> findAirportByIataCode(@PathVariable (value="iatacode")String iatacode){
+    public @ResponseBody ResponseEntity<Airport> findAirportByIataCode(@PathVariable (value="iatacode")String iatacode){
         try{
             Airport airport= airportService.findByIataCode(iatacode);
-            AirportWrapper airportWrapper = new AirportWrapper(airport.getName(),airport.getIataCode(),airport.getLatitude(),
-                    airport.getLongitude(),airport.getCity().getIataCode());
-            return new ResponseEntity<>(airportWrapper,HttpStatus.OK);
+            if(!airport.equals(null)){
+                return new ResponseEntity<>(airport,HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

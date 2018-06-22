@@ -1,9 +1,7 @@
 package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -16,10 +14,10 @@ import java.util.List;
  * Created by Marcosp on 22/5/2018.
  */
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode
 @Table(name = "roads")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Road {
 
     @Id
@@ -28,7 +26,6 @@ public class Road {
     @Column(name = "idroad", nullable = false)
     private long id;
 
-    @NotEmpty(message = "Distance is required.")
     @Column(name = "distance", columnDefinition = "double(10,2)", nullable = false)
     private double distance;
 

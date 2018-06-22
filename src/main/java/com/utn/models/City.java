@@ -36,10 +36,7 @@ public class City {
     @Column(name = "state", columnDefinition = "varchar(40)", nullable = false)
     private String state;
 
-    @OneToMany(mappedBy = "city")
-    private List<Airport> airportList;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;
