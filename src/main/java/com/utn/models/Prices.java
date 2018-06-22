@@ -31,7 +31,7 @@ public class Prices {
     @Column(name = "price")
     private Float price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cabinsforroad_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     public CabinsForRoad cabinsforroad;

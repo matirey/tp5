@@ -26,12 +26,12 @@ public class CabinsForRoad {
     @Column(name = "idcabinforroad")
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cabins_fk")
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Cabins cabin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "road_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Road road;

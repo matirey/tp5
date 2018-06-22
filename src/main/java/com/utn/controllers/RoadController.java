@@ -1,8 +1,10 @@
 package com.utn.controllers;
 
-import com.utn.request.RoadReq;
+import com.utn.models.Airport;
 import com.utn.models.Road;
+import com.utn.services.AirportService;
 import com.utn.services.RoadService;
+import com.utn.wrappers.RoadWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,12 @@ public class RoadController {
 
     @Autowired
     RoadService roadService;
+    @Autowired
+    AirportService airportService;
 
-    @GetMapping(value="/{iata}", consumes = "application/json", produces = "application/json")
-    public @ResponseBody ResponseEntity<List<Road>> GetRoadsByIata(@PathVariable ("iata") String iata ) {
-        List<Road> list = roadService.FindByOrigin(iata);
+    @GetMapping(value="/origin/{iatacode}", produces = "application/json")
+    public @ResponseBody ResponseEntity<List<Road>> GetRoadsByOriginIata(@PathVariable ("iatacode") String iatacode ) {
+        List<Road> list = roadService.findRoadsByOrigin(iatacode);
         if (list.size()>0) {
             return new ResponseEntity<>(list, HttpStatus.OK);
         } else {
@@ -30,11 +34,28 @@ public class RoadController {
         }
     }
 
-    @PostMapping("/road")
-    public ResponseEntity SaveRoad(@RequestBody RoadReq request){
+    @GetMapping(value="/destiny/{iatacode}", produces = "application/json")
+    public @ResponseBody ResponseEntity<List<Road>> GetRoadsByDestinyIata(@PathVariable ("iatacode") String iatacode ) {
+        List<Road> list = roadService.findRoadsByDestiny(iatacode);
+        if (list.size()>0) {
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PostMapping(value="", consumes = "application/json")
+    public ResponseEntity SaveRoad(@RequestBody RoadWrapper request){
         try {
-            roadService.save(request.getOrigin(), request.getDestiny());
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            Airport origin = airportService.findByIataCode(request.getOrigin());
+            Airport destiny = airportService.findByIataCode(request.getDestiny());
+            if(!origin.equals(null) && !destiny.equals(null)) {
+                roadService.save(origin,destiny);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

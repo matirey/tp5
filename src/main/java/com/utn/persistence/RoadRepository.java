@@ -12,9 +12,10 @@ import java.util.List;
 @Repository
 public interface RoadRepository  extends CrudRepository<Road, Long> {
 
-    Road findRoadById(long id);
+    Road findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(String origin, String destiny);
 
-    List<Road> findRoadByAirportorigin_IataCode(String iataCode);
+    List<Road> findRoadsByAirportorigin_IataCode(String iatacode);
 
-    Road findRoadByAirportoriginAndAirportdestiny(long idairportorigin, long idairportdestiny);
+    List<Road> findRoadsByAirportdestiny_IataCode(String iatacode);
+
 }

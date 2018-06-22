@@ -19,41 +19,29 @@ public class RoadService {
     @Autowired
     private RoadRepository repository;
 
-    @Autowired
-    private AirportRepository airportRepository;
-
-    public Road FindByID(long id){
-        return repository.findRoadById(id);
+    public List<Road> findRoadsByOrigin(String iatacode){
+        return repository.findRoadsByAirportorigin_IataCode(iatacode);
     }
 
-    public Road FindByOriginAndDestiny(long idorigen, long iddestino){
-        return repository.findRoadByAirportoriginAndAirportdestiny(idorigen, iddestino);
+    public List<Road> findRoadsByDestiny(String iatacode){
+        return repository.findRoadsByAirportdestiny_IataCode(iatacode);
     }
 
-    public List<Road> FindByOrigin(String iataCode){
-        return repository.findRoadByAirportorigin_IataCode(iataCode);
+    public void  save(Road road){
+        repository.save(road);
     }
 
-    // Guardar
-    public void  save(Road reg){
-        repository.save(reg);
-    }
-
-    // Borrar en cascada
     public void delete(Road road)
     {
         repository.delete(road);
     }
 
-    public void save(String origin, String destiny){
+    public void save(Airport origin, Airport destiny){
         Road road = new Road();
-        Airport airportorigin = airportRepository.findAirportByIataCode(origin);
-        Airport airportdestiny = airportRepository.findAirportByIataCode(destiny);
-
-        road.setAirportorigin(airportorigin);
-        road.setAirportdestiny(airportdestiny);
-        road.setDistance(Haversine.distance(airportorigin.getLatitude(), airportorigin.getLongitude(),
-                airportdestiny.getLatitude(), airportdestiny.getLongitude()));
+        road.setAirportorigin(origin);
+        road.setAirportdestiny(destiny);
+        road.setDistance(Haversine.distance(origin.getLatitude(), origin.getLongitude(),
+                destiny.getLatitude(), destiny.getLongitude()));
         repository.save(road);
     }
 

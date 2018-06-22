@@ -29,15 +29,12 @@ public class Road {
     @Column(name = "distance", columnDefinition = "double(10,2)", nullable = false)
     private double distance;
 
-    @OneToMany(mappedBy = "road")
-    private List<CabinsForRoad> cabinsforroadList;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "airportorigin_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Airport airportorigin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "airportdestiny_fk", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Airport airportdestiny;
