@@ -15,14 +15,14 @@ import java.util.List;
 public class PricesService {
 
     @Autowired
-    private PricesRepository repositorio;
+    private PricesRepository repository;
 
     public Prices findPricesByCabinsforroadAndYearAndMonth(CabinsForRoad cabinsForRoad, int year, int month){
-        return repositorio.findPricesByCabinsforroadAndYearAndMonth(cabinsForRoad, year, month);
+        return repository.findPricesByCabinsforroadAndYearAndMonth(cabinsForRoad, year, month);
     }
 
     public List<Prices> findPricesByCabinsforroad(CabinsForRoad cabinsForRoad){
-        return repositorio.findPricesByCabinsforroad(cabinsForRoad);
+        return repository.findPricesByCabinsforroad(cabinsForRoad);
     }
 
     public List<Prices> findPricesByCabinsforroadAndYear(CabinsForRoad cabinsForRoad, int year){

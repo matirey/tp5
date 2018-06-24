@@ -1,14 +1,14 @@
 package com.utn.controllers;
 
-import com.utn.models.Cabins;
+import com.utn.models.Cabin;
 import com.utn.models.CabinsForRoad;
 import com.utn.models.Prices;
 import com.utn.models.Road;
 import com.utn.services.CabinsForRoadService;
-import com.utn.services.CabinsService;
+import com.utn.services.CabinService;
 import com.utn.services.PricesService;
 import com.utn.services.RoadService;
-import com.utn.wrappers.PricesWrapper;
+import com.utn.wrappers.PriceWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,16 +33,16 @@ public class PricesController {
     RoadService roadService;
 
     @Autowired
-    CabinsService cabinsService;
+    CabinService cabinService;
 
     @PostMapping(value="/price", consumes = "application/json", produces = "application/json")
-    public ResponseEntity SavePrices(@RequestBody PricesWrapper request){
+    public ResponseEntity SavePrices(@RequestBody PriceWrapper request){
         try{
             pricesService.save(request.getPrice(),
                     cabinsForRoadService.findCabinsForRoadByRoadAndCabin(
                             roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(
                                     request.getOrigin(), request.getDestiny()),
-                            cabinsService.findByName(request.getCabin())),
+                            cabinService.findByName(request.getCabin())),
                     request.getYear(),
                     request.getMonth()
                     );
@@ -59,7 +59,7 @@ public class PricesController {
                                                                              @PathVariable ("cabin") String cabinname){
 
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        Cabins cabin = cabinsService.findByName(cabinname);
+        Cabin cabin = cabinService.findByName(cabinname);
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
         if(!road.equals(null) && !cabin.equals(null) && !cabinsForRoad.equals(null)){
             List<Prices> prices = pricesService.findPricesByCabinsforroad(cabinsForRoad);
@@ -83,7 +83,7 @@ public class PricesController {
                                                                              @PathVariable ("year") int year){
 
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        Cabins cabin = cabinsService.findByName(cabinname);
+        Cabin cabin = cabinService.findByName(cabinname);
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
         if(!road.equals(null) && !cabin.equals(null) && !cabinsForRoad.equals(null)){
             List<Prices> prices = pricesService.findPricesByCabinsforroadAndYear(cabinsForRoad, year);
@@ -107,7 +107,7 @@ public class PricesController {
                                                                                @PathVariable ("year") int year,
                                                                                @PathVariable ("month") int month){
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        Cabins cabin = cabinsService.findByName(cabinname);
+        Cabin cabin = cabinService.findByName(cabinname);
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
         if(!road.equals(null) && !cabin.equals(null) && !cabinsForRoad.equals(null)){
             try{

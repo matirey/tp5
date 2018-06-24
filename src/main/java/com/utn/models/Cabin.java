@@ -16,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @EqualsAndHashCode
 @Table(name = "cabin")
-public class Cabins {
+public class Cabin {
 
     @Id
     @JsonIgnore

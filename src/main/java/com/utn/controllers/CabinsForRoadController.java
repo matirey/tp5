@@ -1,12 +1,13 @@
 package com.utn.controllers;
 
-import com.utn.models.Cabins;
+import com.utn.models.Cabin;
 import com.utn.models.Road;
 import com.utn.models.CabinsForRoad;
-import com.utn.services.CabinsService;
+import com.utn.services.CabinService;
 import com.utn.services.RoadService;
 import com.utn.services.CabinsForRoadService;
 import com.utn.wrappers.CabinsForRoadWrapper;
+import com.utn.wrappers.RoadWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import java.util.List;
 public class CabinsForRoadController {
 
     @Autowired
-    CabinsService cabinsService;
+    CabinService cabinService;
 
     @Autowired
     RoadService roadService;
@@ -33,7 +34,7 @@ public class CabinsForRoadController {
     @PostMapping(value="/cabin", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveCabinsForRoad(@RequestBody CabinsForRoadWrapper request){
         try{
-            cabinsForRoadService.save(cabinsService.findByName(request.getCabin()),
+            cabinsForRoadService.save(cabinService.findByName(request.getCabin()),
                     roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny()));
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
@@ -62,13 +63,11 @@ public class CabinsForRoadController {
         }
     }
 
-    @GetMapping(value="/{origin}/{destiny}/{cabin}", produces = "application/json")
-    public @ResponseBody ResponseEntity<CabinsForRoad> GetCabinsForRoadByRoadAndCabin(@PathVariable ("origin") String origin,
-                                                                                      @PathVariable ("destiny") String destiny,
-                                                                                      @PathVariable ("cabin") String cabinname){
-
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        Cabins cabin = cabinsService.findByName(cabinname);
+    @GetMapping(value="/{cabin}", produces = "application/json")
+    public @ResponseBody ResponseEntity<CabinsForRoad> GetCabinsForRoadByRoadAndCabin(@RequestBody RoadWrapper request,
+                                                                                      @PathVariable ("cabin") String cabinName){
+        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny());
+        Cabin cabin = cabinService.findByName(cabinName);
         if(!road.equals(null) && !cabin.equals(null)){
             CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road, cabin);
             try{
