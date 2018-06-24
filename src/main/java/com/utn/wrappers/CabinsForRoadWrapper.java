@@ -5,17 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 /**
- * Created by Matias on 21/06/2018.
+ * Created by Marcosp on 23/6/2018.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CountryWrapper {
-    @JsonProperty("name")
-    String name;
+public class CabinsForRoadWrapper {
 
-    @JsonProperty("isocode")
-    String isoCode;
+    @JsonProperty("cabin")
+    String cabin;
+
+    @JsonProperty("origin")
+    String origin;
+
+    @JsonProperty("destiny")
+    String destiny;
 }

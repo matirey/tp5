@@ -27,6 +27,11 @@ public class RoadService {
         return repository.findRoadsByAirportdestiny_IataCode(iatacode);
     }
 
+    public Road findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(String origin, String destiny)
+    {
+        return repository.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
+    }
+
     public void  save(Road road){
         repository.save(road);
     }

@@ -1,7 +1,6 @@
 package com.utn.controllers;
 
 import com.utn.models.Airport;
-import com.utn.models.City;
 import com.utn.services.AirportService;
 import com.utn.services.CityService;
 import com.utn.wrappers.AirportWrapper;
@@ -18,11 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/airports")
 public class AirportController {
+
     @Autowired
     AirportService airportService;
+
     @Autowired
     CityService cityService;
-
 
     @PostMapping(value="", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveAirport(@RequestBody AirportWrapper request){

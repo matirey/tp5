@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CabinsRepository extends CrudRepository<Cabins, Long> {
 
-    Cabins findCabinsById(long id);
-
     List<Cabins> findAll();
+
+    Cabins findByName(String name);
 }

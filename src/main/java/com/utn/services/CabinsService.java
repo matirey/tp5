@@ -16,18 +16,21 @@ public class CabinsService {
     @Autowired
     private CabinsRepository repositorio;
 
-    public Cabins BuscarXID(long id){
-        return repositorio.findCabinsById(id);
-    }
-
     // Traer todo
     public List<Cabins> findAll(){
         return repositorio.findAll();
     }
 
+    public Cabins findByName(String name)
+    {
+        return repositorio.findByName(name);
+    }
+
     // Guardar
-    public void  save(Cabins reg){
-        repositorio.save(reg);
+    public void  save(String name){
+        Cabins cabin = new Cabins();
+        cabin.setName(name);
+        repositorio.save(cabin);
     }
 
     // Borrar en cascada

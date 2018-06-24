@@ -1,6 +1,7 @@
 package com.utn.persistence;
 
 import com.utn.models.Prices;
+import com.utn.models.CabinsForRoad;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Repository
 public interface PricesRepository extends CrudRepository<Prices, Long>  {
 
-    Prices findPricesById(long id);
-
-    Prices findPricesByCabinsforroadAndYearAndMonth(long idcabinsforroad, int year, int month);
+    List<Prices> findPricesByCabinsforroad(CabinsForRoad cabinsForRoad);
+    Prices findPricesByCabinsforroadAndYearAndMonth(CabinsForRoad cabinsForRoad, int year, int month);
+    List<Prices> findPricesByCabinsforroadAndYear(CabinsForRoad cabinsForRoad, int year);
 }

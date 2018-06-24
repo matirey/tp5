@@ -3,7 +3,6 @@ package com.utn.services;
 import com.utn.models.Airport;
 import com.utn.models.City;
 import com.utn.persistence.AirportRepository;
-import com.utn.wrappers.AirportWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

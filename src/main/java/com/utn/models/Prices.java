@@ -27,7 +27,6 @@ public class Prices {
     @Column(name = "idprice")
     private long id;
 
-    @NotEmpty(message = "Price is required.")
     @Column(name = "price")
     private Float price;
 
@@ -36,11 +35,9 @@ public class Prices {
     @OnDelete(action = OnDeleteAction.CASCADE)
     public CabinsForRoad cabinsforroad;
 
-    @NotEmpty(message = "Year is required.")
     @Column(name = "year")
     private int year;
 
-    @NotEmpty(message = "Month is required.")
     @Column(name = "month")
     private int month;
 }

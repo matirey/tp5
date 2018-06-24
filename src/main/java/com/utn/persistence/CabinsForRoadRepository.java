@@ -1,6 +1,8 @@
 package com.utn.persistence;
 
+import com.utn.models.Cabins;
 import com.utn.models.CabinsForRoad;
+import com.utn.models.Road;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +14,9 @@ import java.util.List;
 @Repository
 public interface CabinsForRoadRepository extends CrudRepository<CabinsForRoad, Long> {
 
-    CabinsForRoad findCabinsForRoadById(long id);
-
     List<CabinsForRoad> findAll();
 
-    List<CabinsForRoad> findCabinsForRoadByCabinAndRoad(long idcabin, long idroad);
+    List<CabinsForRoad> findCabinsForRoadByRoad(Road road);
+
+    CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabins cabin);
 }
