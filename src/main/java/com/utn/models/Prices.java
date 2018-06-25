@@ -1,9 +1,9 @@
 package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
@@ -13,9 +13,9 @@ import javax.persistence.*;
  * Created by Marcosp on 23/5/2018.
  */
 @Entity
-@Setter
-@Getter
-@EqualsAndHashCode
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "prices")
 public class Prices {
 

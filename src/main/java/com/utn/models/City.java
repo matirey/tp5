@@ -1,7 +1,9 @@
 package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,6 +16,8 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "cities", uniqueConstraints = {@UniqueConstraint(columnNames = {"iataCode"})})
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class City {
 
     @Id

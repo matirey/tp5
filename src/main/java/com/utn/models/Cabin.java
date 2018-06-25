@@ -1,9 +1,9 @@
 package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,9 +12,9 @@ import javax.validation.constraints.NotEmpty;
  * Created by Marcosp on 23/5/2018.
  */
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cabin")
 public class Cabin {
 

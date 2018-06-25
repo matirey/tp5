@@ -2,7 +2,9 @@ package com.utn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -13,6 +15,8 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "countries", uniqueConstraints = {@UniqueConstraint(columnNames = {"isoCode"})})
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Country {
 
     @Id
