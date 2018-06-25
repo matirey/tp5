@@ -48,7 +48,7 @@ public class CabinsForRoadController {
                                                                                     @PathVariable ("destiny") String destiny){
 
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        if(!road.equals(null)){
+        if(road!=null){
             List<CabinsForRoad> cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoad(road);
             if(cabinsForRoad.size()>0){
                 return new ResponseEntity<>(cabinsForRoad, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class CabinsForRoadController {
                                                                                       @PathVariable ("cabin") String cabinName){
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny());
         Cabin cabin = cabinService.findByName(cabinName);
-        if(!road.equals(null) && !cabin.equals(null)){
+        if(road!=null && cabin!=null){
             CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road, cabin);
             try{
                 return new ResponseEntity<>(cabinsForRoad, HttpStatus.CREATED);

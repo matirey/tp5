@@ -49,7 +49,7 @@ public class RoadController {
                                                                          @PathVariable ("destiny") String destiny) {
         try{
             Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin,destiny);
-            if(!road.equals(null)){
+            if(road!=null){
                 return new ResponseEntity<>(road,HttpStatus.OK);
             }
             else{
@@ -66,7 +66,7 @@ public class RoadController {
         try {
             Airport origin = airportService.findByIataCode(request.getOrigin());
             Airport destiny = airportService.findByIataCode(request.getDestiny());
-            if(!origin.equals(null) && !destiny.equals(null)) {
+            if(origin!=null && destiny!=null) {
                 roadService.save(origin,destiny);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }

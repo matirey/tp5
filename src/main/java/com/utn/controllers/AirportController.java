@@ -49,7 +49,7 @@ public class AirportController {
     public @ResponseBody ResponseEntity<Airport> findAirportByIataCode(@PathVariable (value="iatacode")String iatacode){
         try{
             Airport airport= airportService.findByIataCode(iatacode);
-            if(!airport.equals(null)){
+            if(airport!=null){
                 return new ResponseEntity<>(airport,HttpStatus.OK);
             }
             else{

@@ -39,7 +39,7 @@ public class LocationsController {
     public @ResponseBody ResponseEntity<Country> getLocationByCode(@PathVariable (value = "isocode") String isocode){
         try {
             Country country = countryService.findCountryByIsoCode(isocode);
-            if (!country.equals(null)) {
+            if (country!=null) {
                 return new ResponseEntity<>(country, HttpStatus.OK);
             }
             else {
@@ -66,7 +66,7 @@ public class LocationsController {
     public ResponseEntity<City> findCityByIataCode(@PathVariable (value="iatacode") String iatacode ){
         try{
             City city = cityService.findCityByIataCode(iatacode);
-            if (!city.equals(null)) {
+            if (city!=null) {
                 return new ResponseEntity<>(city,HttpStatus.OK);
             }
             else{
