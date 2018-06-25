@@ -18,34 +18,25 @@ public class PricesService {
     @Autowired
     private PricesRepository repository;
 
-<<<<<<< HEAD
-=======
-    public Prices findPricesByCabinsforroadAndYearAndMonth(CabinsForRoad cabinsForRoad, int year, int month){
-        return repository.findPricesByCabinsforroadAndYearAndMonth(cabinsForRoad, year, month);
-    }
-
->>>>>>> dfaa22083d9bd71605bf9e1d0b8549aef642713d
     public List<Prices> findPricesByCabinsforroad(CabinsForRoad cabinsForRoad){
         return repository.findPricesByCabinsforroad(cabinsForRoad);
     }
 
     public Prices findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(CabinsForRoad cabinsForRoad, LocalDate traveldate){
-        return repositorio.findByCabinsforroadAndFromdateLessThanEqualAndTodateGreaterThanEqual(cabinsForRoad,traveldate, traveldate);
+        return repository.findByCabinsforroadAndFromdateLessThanEqualAndTodateGreaterThanEqual(cabinsForRoad,traveldate, traveldate);
     }
 
-    // Guardar
     public void  save(Float price, CabinsForRoad cabinsForRoad, LocalDate fromdate, LocalDate todate){
         Prices prices = new Prices();
         prices.setPrice(price);
         prices.setCabinsforroad(cabinsForRoad);
         prices.setFromdate(fromdate);
         prices.setTodate(todate);
-        repositorio.save(prices);
+        repository.save(prices);
     }
 
-    // Borrar en cascada
     public void delete(Prices prices)
     {
-        repositorio.delete(prices);
+        repository.delete(prices);
     }
 }
