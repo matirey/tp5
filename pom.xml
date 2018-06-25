@@ -29,6 +29,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- import models from api -->
+		<dependency>
+			<groupId>com.utn</groupId>
+			<artifactId>models</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/models-0.0.1-SNAPSHOT.jar</systemPath>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session -->
 		<dependency>
