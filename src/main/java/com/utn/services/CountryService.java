@@ -1,12 +1,9 @@
 package com.utn.services;
 
-import com.utn.models.City;
 import com.utn.models.Country;
 import com.utn.persistence.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by Marcosp on 2/6/2018.
@@ -26,10 +23,6 @@ public class CountryService {
         country.setName(name);
         country.setIsoCode(isocode);
         repository.save(country);
-    }
-
-    public List<Country> findAll(){
-        return repository.findAll();
     }
 
     public void delete(Country country)

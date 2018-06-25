@@ -15,9 +15,4 @@ public interface AirportRepository extends CrudRepository<Airport, Long> {
     List<Airport> findAll();
 
     Airport findAirportByIataCode(String iatacode);
-
-    List<Airport> findAirportsByCity_IataCode(String iatacode);
-
-    List<Airport> findAirportsByCity_Country_Name(String country);
-
 }

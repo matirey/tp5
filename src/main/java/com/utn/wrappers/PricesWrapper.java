@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 /**
  * Created by Marcosp on 24/6/2018.
@@ -16,11 +17,14 @@ public class PricesWrapper {
     @JsonProperty("price")
     Float price;
 
-    @JsonProperty("year")
-    int year;
+    @JsonProperty("fromdate")
+    LocalDate fromdate;
 
-    @JsonProperty("month")
-    int month;
+    @JsonProperty("todate")
+    LocalDate todate;
+
+    @JsonProperty("traveldate")
+    String traveldate;
 
     @JsonProperty("cabin")
     String cabin;

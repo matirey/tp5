@@ -44,7 +44,7 @@ public class RoadController {
         }
     }
 
-    @GetMapping(value="/origin/{origin}/destiny/{destiny}", produces = "application/json")
+    @GetMapping(value="/{origin}/{destiny}", produces = "application/json")
     public @ResponseBody ResponseEntity<Road> GetRoadsByOriginAndDestiny(@PathVariable ("origin") String origin,
                                                                          @PathVariable ("destiny") String destiny) {
         try{

@@ -5,6 +5,7 @@ import com.utn.models.CabinsForRoad;
 import com.utn.persistence.PricesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 
 import java.util.List;
 
@@ -17,25 +18,21 @@ public class PricesService {
     @Autowired
     private PricesRepository repositorio;
 
-    public Prices findPricesByCabinsforroadAndYearAndMonth(CabinsForRoad cabinsForRoad, int year, int month){
-        return repositorio.findPricesByCabinsforroadAndYearAndMonth(cabinsForRoad, year, month);
-    }
-
     public List<Prices> findPricesByCabinsforroad(CabinsForRoad cabinsForRoad){
         return repositorio.findPricesByCabinsforroad(cabinsForRoad);
     }
 
-    public List<Prices> findPricesByCabinsforroadAndYear(CabinsForRoad cabinsForRoad, int year){
-        return repositorio.findPricesByCabinsforroadAndYear(cabinsForRoad, year);
+    public Prices findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(CabinsForRoad cabinsForRoad, LocalDate traveldate){
+        return repositorio.findByCabinsforroadAndFromdateLessThanEqualAndTodateGreaterThanEqual(cabinsForRoad,traveldate, traveldate);
     }
 
     // Guardar
-    public void  save(Float price, CabinsForRoad cabinsForRoad, int year, int month){
+    public void  save(Float price, CabinsForRoad cabinsForRoad, LocalDate fromdate, LocalDate todate){
         Prices prices = new Prices();
         prices.setPrice(price);
         prices.setCabinsforroad(cabinsForRoad);
-        prices.setYear(year);
-        prices.setMonth(month);
+        prices.setFromdate(fromdate);
+        prices.setTodate(todate);
         repositorio.save(prices);
     }
 

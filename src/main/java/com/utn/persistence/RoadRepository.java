@@ -17,5 +17,4 @@ public interface RoadRepository  extends CrudRepository<Road, Long> {
     List<Road> findRoadsByAirportorigin_IataCode(String iatacode);
 
     List<Road> findRoadsByAirportdestiny_IataCode(String iatacode);
-
 }

@@ -15,6 +15,4 @@ public interface CountryRepository extends CrudRepository<Country, Long>  {
     Country findCountryByIsoCode(String isocode);
 
     List<Country> findAll();
-
-
 }

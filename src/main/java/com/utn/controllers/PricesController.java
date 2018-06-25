@@ -14,7 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Marcosp on 24/6/2018.
@@ -43,8 +46,8 @@ public class PricesController {
                             roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(
                                     request.getOrigin(), request.getDestiny()),
                             cabinsService.findByName(request.getCabin())),
-                    request.getYear(),
-                    request.getMonth()
+                    request.getFromdate(),
+                    request.getTodate()
                     );
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
@@ -76,42 +79,19 @@ public class PricesController {
         }
     }
 
-    @GetMapping(value="/{origin}/{destiny}/{cabin}/{year}", produces = "application/json")
-    public @ResponseBody ResponseEntity<List<Prices>> GetPricesByRoadAndYear(@PathVariable ("origin") String origin,
-                                                                             @PathVariable ("destiny") String destiny,
-                                                                             @PathVariable ("cabin") String cabinname,
-                                                                             @PathVariable ("year") int year){
-
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        Cabins cabin = cabinsService.findByName(cabinname);
-        CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
-        if(!road.equals(null) && !cabin.equals(null) && !cabinsForRoad.equals(null)){
-            List<Prices> prices = pricesService.findPricesByCabinsforroadAndYear(cabinsForRoad, year);
-            if(prices.size()>0){
-                return new ResponseEntity<>(prices, HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @GetMapping("/{origin}/{destiny}/{cabin}/{year}/{month}")
+    @GetMapping("/{origin}/{destiny}/{cabin}/{traveldate}")
     public @ResponseBody ResponseEntity<Prices> GetPricesByRoadAndYearAndMonth(@PathVariable ("origin") String origin,
                                                                                @PathVariable ("destiny") String destiny,
                                                                                @PathVariable ("cabin") String cabinname,
-                                                                               @PathVariable ("year") int year,
-                                                                               @PathVariable ("month") int month){
+                                                                               @PathVariable ("traveldate") String traveldate){
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
         Cabins cabin = cabinsService.findByName(cabinname);
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
         if(!road.equals(null) && !cabin.equals(null) && !cabinsForRoad.equals(null)){
             try{
-                Prices prices = pricesService.findPricesByCabinsforroadAndYearAndMonth(cabinsForRoad, year, month);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate date = LocalDate.parse(traveldate, formatter);
+                Prices prices = pricesService.findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(cabinsForRoad, date);
 
                 if(!prices.equals(null)){
                     return new ResponseEntity<>(prices,HttpStatus.OK);

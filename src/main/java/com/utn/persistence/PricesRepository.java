@@ -4,6 +4,7 @@ import com.utn.models.Prices;
 import com.utn.models.CabinsForRoad;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import java.time.LocalDate;
 
 import java.util.List;
 
@@ -14,6 +15,5 @@ import java.util.List;
 public interface PricesRepository extends CrudRepository<Prices, Long>  {
 
     List<Prices> findPricesByCabinsforroad(CabinsForRoad cabinsForRoad);
-    Prices findPricesByCabinsforroadAndYearAndMonth(CabinsForRoad cabinsForRoad, int year, int month);
-    List<Prices> findPricesByCabinsforroadAndYear(CabinsForRoad cabinsForRoad, int year);
+    Prices findByCabinsforroadAndFromdateLessThanEqualAndTodateGreaterThanEqual(CabinsForRoad cabinsForRoad, LocalDate fromdate,  LocalDate todate);
 }

@@ -4,7 +4,6 @@ import com.utn.models.Road;
 import com.utn.Utils.Haversine;
 import com.utn.persistence.RoadRepository;
 import com.utn.models.Airport;
-import com.utn.persistence.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

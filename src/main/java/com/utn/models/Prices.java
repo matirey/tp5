@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
+import java.time.LocalDate;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 
 /**
  * Created by Marcosp on 23/5/2018.
@@ -35,9 +33,9 @@ public class Prices {
     @OnDelete(action = OnDeleteAction.CASCADE)
     public CabinsForRoad cabinsforroad;
 
-    @Column(name = "year")
-    private int year;
+    @Column(name = "fromdate")
+    private LocalDate fromdate;
 
-    @Column(name = "month")
-    private int month;
+    @Column(name = "todate")
+    private LocalDate todate;
 }

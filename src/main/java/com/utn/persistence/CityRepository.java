@@ -13,6 +13,4 @@ import java.util.List;
 public interface CityRepository extends CrudRepository<City, Long>  {
 
     City findCityByIataCode(String iatacode);
-
-    List<City> findCitiesByCountry(long idstate);
 }

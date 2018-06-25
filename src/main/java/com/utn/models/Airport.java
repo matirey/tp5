@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 /**
  * Created by Matias on 17/05/2018.
