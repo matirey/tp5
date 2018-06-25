@@ -16,10 +16,17 @@ import java.util.List;
 public class PricesService {
 
     @Autowired
-    private PricesRepository repositorio;
+    private PricesRepository repository;
 
+<<<<<<< HEAD
+=======
+    public Prices findPricesByCabinsforroadAndYearAndMonth(CabinsForRoad cabinsForRoad, int year, int month){
+        return repository.findPricesByCabinsforroadAndYearAndMonth(cabinsForRoad, year, month);
+    }
+
+>>>>>>> dfaa22083d9bd71605bf9e1d0b8549aef642713d
     public List<Prices> findPricesByCabinsforroad(CabinsForRoad cabinsForRoad){
-        return repositorio.findPricesByCabinsforroad(cabinsForRoad);
+        return repository.findPricesByCabinsforroad(cabinsForRoad);
     }
 
     public Prices findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(CabinsForRoad cabinsForRoad, LocalDate traveldate){

@@ -1,7 +1,7 @@
 package com.utn.controllers;
 
-import com.utn.models.Cabins;
-import com.utn.services.CabinsService;
+import com.utn.models.Cabin;
+import com.utn.services.CabinService;
 import com.utn.wrappers.CabinWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,12 +18,12 @@ import java.util.List;
 public class CabinController {
 
     @Autowired
-    CabinsService cabinsService;
+    CabinService cabinService;
 
-    @PostMapping(value="/cabin", consumes = "application/json", produces = "application/json")
+    @PostMapping(value="", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveCabin(@RequestBody CabinWrapper request){
         try{
-            cabinsService.save(request.getName());
+            cabinService.save(request.getName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         catch (Exception e){
@@ -32,8 +32,8 @@ public class CabinController {
     }
 
     @GetMapping("")
-    public @ResponseBody ResponseEntity<List<Cabins>> findAll(){
-        List<Cabins> list = cabinsService.findAll();
+    public @ResponseBody ResponseEntity<List<Cabin>> findAll(){
+        List<Cabin> list = cabinService.findAll();
         if (list.size()>0) {
             return new ResponseEntity<>(list, HttpStatus.OK);
         } else {

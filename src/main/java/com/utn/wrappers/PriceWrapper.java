@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PricesWrapper {
+public class PriceWrapper {
 
     @JsonProperty("price")
     Float price;

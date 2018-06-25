@@ -1,7 +1,7 @@
 package com.utn.services;
 
 import com.utn.models.Road;
-import com.utn.Utils.Haversine;
+import com.utn.utils.Haversine;
 import com.utn.persistence.RoadRepository;
 import com.utn.models.Airport;
 import org.springframework.beans.factory.annotation.Autowired;

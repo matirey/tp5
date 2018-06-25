@@ -29,7 +29,7 @@ public class CabinsForRoad {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cabins_fk")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    public Cabins cabin;
+    public Cabin cabin;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "road_fk", nullable = false)

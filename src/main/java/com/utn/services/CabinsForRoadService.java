@@ -1,7 +1,7 @@
 package com.utn.services;
 
 import com.utn.models.CabinsForRoad;
-import com.utn.models.Cabins;
+import com.utn.models.Cabin;
 import com.utn.models.Road;
 import com.utn.persistence.CabinsForRoadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,33 +16,30 @@ import java.util.List;
 public class CabinsForRoadService {
 
     @Autowired
-    private CabinsForRoadRepository repositorio;
+    private CabinsForRoadRepository repository;
 
     public List<CabinsForRoad> findCabinsForRoadByRoad(Road road){
-        return repositorio.findCabinsForRoadByRoad(road);
+        return repository.findCabinsForRoadByRoad(road);
     }
 
-    public CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabins cabin)
+    public CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabin cabin)
     {
-        return repositorio.findCabinsForRoadByRoadAndCabin(road, cabin);
+        return repository.findCabinsForRoadByRoadAndCabin(road, cabin);
     }
 
-    // Traer todo
     public List<CabinsForRoad> findAll(){
-        return repositorio.findAll();
+        return repository.findAll();
     }
 
-    // Guardar
-    public void  save(Cabins cabin, Road road){
+    public void save(Cabin cabin, Road road){
         CabinsForRoad cabinsForRoad = new CabinsForRoad();
         cabinsForRoad.setCabin(cabin);
         cabinsForRoad.setRoad(road);
-        repositorio.save(cabinsForRoad);
+        repository.save(cabinsForRoad);
     }
 
-    // Borrar en cascada
     public void delete(CabinsForRoad cabinsforroad)
     {
-        repositorio.delete(cabinsforroad);
+        repository.delete(cabinsforroad);
     }
 }

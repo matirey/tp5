@@ -1,4 +1,4 @@
-package com.utn.Utils;
+package com.utn.utils;
 
 /**
  * Jason Winn
