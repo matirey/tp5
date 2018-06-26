@@ -44,11 +44,17 @@ public class RoadController {
         }
     }
 
-    @GetMapping(value="/{origin}/{destiny}", produces = "application/json")
-    public @ResponseBody ResponseEntity<Road> GetRoadsByOriginAndDestiny(@PathVariable ("origin") String origin,
-                                                                         @PathVariable ("destiny") String destiny) {
+    /**
+     * Post -> RoadWrapper
+     * {
+     *     origin:origin_iatacode,
+     *     destiny:destiny_iatacode
+     * }
+     */
+    @PostMapping(value="", produces = "application/json")
+    public @ResponseBody ResponseEntity<Road> GetRoadsByOriginAndDestiny(@RequestBody RoadWrapper request) {
         try{
-            Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin,destiny);
+            Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(),request.getDestiny());
             if(road!=null){
                 return new ResponseEntity<>(road,HttpStatus.OK);
             }
@@ -61,7 +67,7 @@ public class RoadController {
         }
     }
 
-    @PostMapping(value="", consumes = "application/json")
+    @PutMapping(value="", consumes = "application/json")
     public ResponseEntity SaveRoad(@RequestBody RoadWrapper request){
         try {
             Airport origin = airportService.findByIataCode(request.getOrigin());

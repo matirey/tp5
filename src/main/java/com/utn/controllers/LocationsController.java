@@ -24,7 +24,7 @@ public class LocationsController {
     @Autowired
     CountryService countryService;
 
-    @PostMapping(value="/country", consumes = "application/json", produces = "application/json")
+    @PutMapping(value="/country", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveCountry(@RequestBody CountryWrapper request){
         try{
             countryService.save(request.getName(),request.getIsoCode());
@@ -50,7 +50,7 @@ public class LocationsController {
         }
     }
 
-    @PostMapping("/city")
+    @PutMapping("/city")
     public ResponseEntity SaveCity(@RequestBody CityWrapper request){
         try{
             cityService.save(request.getName(),request.getIataCode(),request.getState(),

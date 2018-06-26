@@ -9,6 +9,7 @@ import com.utn.services.CabinService;
 import com.utn.services.PricesService;
 import com.utn.services.RoadService;
 import com.utn.wrappers.PriceWrapper;
+import com.utn.wrappers.RoadWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class PricesController {
     @Autowired
     CabinService cabinService;
 
-    @PostMapping(value="/price", consumes = "application/json", produces = "application/json")
+    @PutMapping(value="/price", consumes = "application/json", produces = "application/json")
     public ResponseEntity SavePrices(@RequestBody PriceWrapper request){
         try{
             pricesService.save(request.getPrice(),
@@ -53,12 +54,17 @@ public class PricesController {
         }
     }
 
-    @GetMapping(value="/{origin}/{destiny}/{cabin}", produces = "application/json")
-    public @ResponseBody ResponseEntity<List<Prices>> GetPricesByRoadAndYear(@PathVariable ("origin") String origin,
-                                                                             @PathVariable ("destiny") String destiny,
+    /**
+     * Post -> RoadWrapper
+     * {
+     *     origin=origin_iatacode
+     *     destiny=destiny_iatacode
+     * }
+     */
+    @PostMapping(value="/{cabin}", produces = "application/json")
+    public @ResponseBody ResponseEntity<List<Prices>> GetPricesByRoadAndYear(@RequestBody RoadWrapper request,
                                                                              @PathVariable ("cabin") String cabinname){
-
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
+        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(),request.getDestiny());
         Cabin cabin = cabinService.findByName(cabinname);
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
         if(road!=null && cabin!=null && cabinsForRoad!=null){
@@ -76,12 +82,18 @@ public class PricesController {
         }
     }
 
-    @GetMapping("/{origin}/{destiny}/{cabin}/{traveldate}")
-    public @ResponseBody ResponseEntity<Prices> GetPricesByRoadAndYearAndMonth(@PathVariable ("origin") String origin,
-                                                                               @PathVariable ("destiny") String destiny,
+    /**
+     * Post -> RoadWrapper
+     * {
+     *     origin:origin_iatacode,
+     *     destiny:destiny_iatacode
+     * }
+     */
+    @PostMapping("/{cabin}/{traveldate}")
+    public @ResponseBody ResponseEntity<Prices> GetPricesByRoadAndYearAndMonth(@RequestBody RoadWrapper request,
                                                                                @PathVariable ("cabin") String cabinname,
                                                                                @PathVariable ("traveldate") String traveldate){
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
+        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(),request.getDestiny());
         Cabin cabin = cabinService.findByName(cabinname);
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
         if(road!=null && cabin!=null && cabinsForRoad!=null){
