@@ -24,7 +24,7 @@ public class AirportController {
     @Autowired
     CityService cityService;
 
-    @PostMapping(value="", consumes = "application/json", produces = "application/json")
+    @PutMapping(value="", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveAirport(@RequestBody AirportWrapper request){
         try {
             airportService.save(request.getName(),request.getIataCode(),request.getLatitude(),

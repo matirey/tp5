@@ -31,7 +31,7 @@ public class CabinsForRoadController {
     @Autowired
     CabinsForRoadService cabinsForRoadService;
 
-    @PostMapping(value="/cabin", consumes = "application/json", produces = "application/json")
+    @PutMapping(value="/cabin", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveCabinsForRoad(@RequestBody CabinsForRoadWrapper request){
         try{
             cabinsForRoadService.save(cabinService.findByName(request.getCabin()),
@@ -43,11 +43,10 @@ public class CabinsForRoadController {
         }
     }
 
-    @GetMapping(value="/{origin}/{destiny}", produces = "application/json")
-    public @ResponseBody ResponseEntity<List<CabinsForRoad>> GetCabinsForRoadByRoad(@PathVariable ("origin") String origin,
-                                                                                    @PathVariable ("destiny") String destiny){
+    @PostMapping(value="", produces = "application/json")
+    public @ResponseBody ResponseEntity<List<CabinsForRoad>> GetCabinsForRoadByRoad(@RequestBody RoadWrapper request){
 
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
+        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny());
         if(road!=null){
             List<CabinsForRoad> cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoad(road);
             if(cabinsForRoad.size()>0){
