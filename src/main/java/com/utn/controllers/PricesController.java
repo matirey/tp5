@@ -55,51 +55,23 @@ public class PricesController {
     }
 
     /**
-     * Post -> RoadWrapper
+     * Post -> pricewrapper
      * {
-     *     origin=origin_iatacode
-     *     destiny=destiny_iatacode
+     *     origin : origin_iatacode,
+     *     destiny : destiny_iatacode,
+     *     cabin : cabinName,
+     *     traveldate : YYYY-MM-DD
      * }
      */
-    @PostMapping(value="/{cabin}", produces = "application/json")
-    public @ResponseBody ResponseEntity<List<Prices>> GetPricesByRoadAndYear(@RequestBody RoadWrapper request,
-                                                                             @PathVariable ("cabin") String cabinname){
+    @PostMapping("")
+    public @ResponseBody ResponseEntity<Prices> GetPricesByRoadAndYearAndMonth(@RequestBody PriceWrapper request){
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(),request.getDestiny());
-        Cabin cabin = cabinService.findByName(cabinname);
-        CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
-        if(road!=null && cabin!=null && cabinsForRoad!=null){
-            List<Prices> prices = pricesService.findPricesByCabinsforroad(cabinsForRoad);
-            if(prices.size()>0){
-                return new ResponseEntity<>(prices, HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    /**
-     * Post -> RoadWrapper
-     * {
-     *     origin:origin_iatacode,
-     *     destiny:destiny_iatacode
-     * }
-     */
-    @PostMapping("/{cabin}/{traveldate}")
-    public @ResponseBody ResponseEntity<Prices> GetPricesByRoadAndYearAndMonth(@RequestBody RoadWrapper request,
-                                                                               @PathVariable ("cabin") String cabinname,
-                                                                               @PathVariable ("traveldate") String traveldate){
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(),request.getDestiny());
-        Cabin cabin = cabinService.findByName(cabinname);
+        Cabin cabin = cabinService.findByName(request.getCabin());
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
         if(road!=null && cabin!=null && cabinsForRoad!=null){
             try{
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate date = LocalDate.parse(traveldate, formatter);
+                LocalDate date = LocalDate.parse(request.getTraveldate(), formatter);
                 Prices prices = pricesService.findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(cabinsForRoad, date);
 
                 if(prices!=null){
