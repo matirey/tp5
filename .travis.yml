@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk8
+sudo: false
+notifications:
+  email:
+    recipients:
+      - soloamimepasa91@gmail.com
+    on_success: always
+    on_failure: always
