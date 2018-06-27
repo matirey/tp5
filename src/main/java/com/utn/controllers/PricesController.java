@@ -68,21 +68,17 @@ public class PricesController {
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(),request.getDestiny());
         Cabin cabin = cabinService.findByName(request.getCabin());
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
-        if(road!=null && cabin!=null && cabinsForRoad!=null){
-            try{
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate date = LocalDate.parse(request.getTraveldate(), formatter);
-                Prices prices = pricesService.findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(cabinsForRoad, date);
+        if(road!=null && cabin!=null && cabinsForRoad!=null)
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(request.getTraveldate(), formatter);
+            Prices prices = pricesService.findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(cabinsForRoad, date);
 
-                if(prices!=null){
-                    return new ResponseEntity<>(prices,HttpStatus.OK);
-                }
-                else{
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-                }
+            if(prices!=null){
+                return new ResponseEntity<>(prices,HttpStatus.OK);
             }
-            catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
         else{

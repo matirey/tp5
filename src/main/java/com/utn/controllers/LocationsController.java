@@ -28,6 +28,7 @@ public class LocationsController {
     public ResponseEntity SaveCountry(@RequestBody CountryWrapper request){
         try{
             countryService.save(request.getName(),request.getIsoCode());
+            countryService.findCountryByIsoCode(request.getIsoCode());
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         catch (Exception e){
@@ -37,16 +38,12 @@ public class LocationsController {
 
     @GetMapping(value="/country/{isocode}", produces = "application/json")
     public @ResponseBody ResponseEntity<Country> getLocationByCode(@PathVariable (value = "isocode") String isocode){
-        try {
-            Country country = countryService.findCountryByIsoCode(isocode);
-            if (country!=null) {
-                return new ResponseEntity<>(country, HttpStatus.OK);
-            }
-            else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        Country country = countryService.findCountryByIsoCode(isocode);
+        if (country!=null) {
+            return new ResponseEntity<>(country, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
@@ -64,17 +61,12 @@ public class LocationsController {
 
     @GetMapping(value="/city/{iatacode}", produces = "application/json")
     public ResponseEntity<City> findCityByIataCode(@PathVariable (value="iatacode") String iatacode ){
-        try{
-            City city = cityService.findCityByIataCode(iatacode);
-            if (city!=null) {
-                return new ResponseEntity<>(city,HttpStatus.OK);
-            }
-            else{
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+        City city = cityService.findCityByIataCode(iatacode);
+        if (city!=null) {
+            return new ResponseEntity<>(city,HttpStatus.OK);
         }
-        catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 }

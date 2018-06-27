@@ -4,6 +4,7 @@ import com.utn.Tp5Application;
 import com.utn.controllers.CabinController;
 import com.utn.controllers.CabinsForRoadController;
 import com.utn.models.*;
+import com.utn.services.CabinService;
 import com.utn.services.CabinsForRoadService;
 import com.utn.services.RoadService;
 import com.utn.wrappers.CabinsForRoadWrapper;
@@ -41,6 +42,9 @@ public class CabinsForRoadControllerTest {
 
     @Mock
     private RoadService roadService;
+
+    @Mock
+    private CabinService cabinService;
 
     @Before
     public void setup() {
@@ -97,6 +101,28 @@ public class CabinsForRoadControllerTest {
         ResponseEntity response = controller.findCabinsForRoadByRoad(wrapper);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
 
+    }
+
+    // Put
+    @Test
+    public void Put() {
+        CabinsForRoadWrapper wrapper = new CabinsForRoadWrapper("economica","MDQ","AEP");
+        cabinService.save("economica");
+        Road road = new Road(1L, 323L, airport, airport2);
+        roadService.save(road);
+        ResponseEntity response = controller.SaveCabinsForRoad(wrapper);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+    }
+
+
+    // Put Server Error
+    @Test
+    public void PutServerError() {
+        CabinsForRoadWrapper wrapper = new CabinsForRoadWrapper("economica","MDQ","AEP");
+        when(roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode("MDQ","AEP")).thenThrow(Exception.class);
+        ResponseEntity response = controller.SaveCabinsForRoad(wrapper);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
 }
