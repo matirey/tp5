@@ -33,8 +33,8 @@ public class CabinsForRoadService {
         repository.save(cabinsForRoad);
     }
 
-    public void delete(CabinsForRoad cabinsforroad)
+    /*public void delete(CabinsForRoad cabinsforroad)
     {
         repository.delete(cabinsforroad);
-    }
+    }*/
 }

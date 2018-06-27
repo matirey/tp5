@@ -39,8 +39,8 @@ public class AirportService {
         repository.save(airport);
     }
     // cascade delete
-    public void delete(Airport airport)
+   /* public void delete(Airport airport)
     {
         repository.delete(airport);
-    }
+    }*/
 }

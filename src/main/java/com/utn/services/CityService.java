@@ -30,9 +30,9 @@ public class CityService {
         return repository.save(city);
     }
 
-    public void delete(City city)
+    /*public void delete(City city)
     {
         repository.delete(city);
-    }
+    }*/
 
 }

@@ -31,8 +31,8 @@ public class CabinService {
         repository.save(cabin);
     }
 
-    public void delete(Cabin cabin)
+    /*public void delete(Cabin cabin)
     {
         repository.delete(cabin);
-    }
+    }*/
 }

@@ -139,27 +139,4 @@ public class PricesControllerTest {
         assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
     }
 
-    // GET Prices By Road and Year and MonthY EMPTY 2
-    @Test
-    public void GetPricesByRoadAndYearAndMonthEmpty2() {
-        Cabin cabin = new Cabin(1L,"economica");
-        Road road = new Road(1L, 323L, airport, airport2);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse("2018-08-01", formatter);
-        LocalDate date2 = LocalDate.parse("2018-08-30", formatter);
-        LocalDate traveldate = LocalDate.parse("2018-08-15", formatter);
-        CabinsForRoad cabinsForRoad = new CabinsForRoad(1L, cabin, road);
-
-        Prices prices = new Prices(1L, 500F, cabinsForRoad, date, date2);
-        PriceWrapper wrapper = new PriceWrapper(500F, date, date2, "2018-08-15",
-                "economica", "MDQ", "EZE");
-
-        when(roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode("MDQ","AEP")).thenReturn(road);
-        when(cabinService.findByName("economica")).thenReturn(cabin);
-        when(cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road, cabin)).thenReturn(cabinsForRoad);
-        when(service.findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(cabinsForRoad,traveldate)).thenReturn(prices);
-        ResponseEntity response = controller.GetPricesByRoadAndYearAndMonth(wrapper);
-        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
-    }
-
 }
