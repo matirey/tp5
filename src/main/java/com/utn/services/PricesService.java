@@ -35,8 +35,8 @@ public class PricesService {
         repository.save(prices);
     }
 
-    public void delete(Prices prices)
+    /*public void delete(Prices prices)
     {
         repository.delete(prices);
-    }
+    }*/
 }

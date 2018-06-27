@@ -20,10 +20,11 @@ public class CabinController {
     @Autowired
     CabinService cabinService;
 
-    @PostMapping(value="", consumes = "application/json", produces = "application/json")
+    @PutMapping(value="", consumes = "application/json", produces = "application/json")
     public ResponseEntity SaveCabin(@RequestBody CabinWrapper request){
         try{
             cabinService.save(request.getName());
+            cabinService.findByName(request.getName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         catch (Exception e){

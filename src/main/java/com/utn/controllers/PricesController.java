@@ -9,6 +9,7 @@ import com.utn.services.CabinService;
 import com.utn.services.PricesService;
 import com.utn.services.RoadService;
 import com.utn.wrappers.PriceWrapper;
+import com.utn.wrappers.RoadWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class PricesController {
     @Autowired
     CabinService cabinService;
 
-    @PostMapping(value="/price", consumes = "application/json", produces = "application/json")
+    @PutMapping(value="/price", consumes = "application/json", produces = "application/json")
     public ResponseEntity SavePrices(@RequestBody PriceWrapper request){
         try{
             pricesService.save(request.getPrice(),
@@ -53,52 +54,31 @@ public class PricesController {
         }
     }
 
-    @GetMapping(value="/{origin}/{destiny}/{cabin}", produces = "application/json")
-    public @ResponseBody ResponseEntity<List<Prices>> GetPricesByRoadAndYear(@PathVariable ("origin") String origin,
-                                                                             @PathVariable ("destiny") String destiny,
-                                                                             @PathVariable ("cabin") String cabinname){
-
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        Cabin cabin = cabinService.findByName(cabinname);
+    /**
+     * Post -> pricewrapper
+     * {
+     *     origin : origin_iatacode,
+     *     destiny : destiny_iatacode,
+     *     cabin : cabinName,
+     *     traveldate : YYYY-MM-DD
+     * }
+     */
+    @PostMapping("")
+    public @ResponseBody ResponseEntity<Prices> GetPricesByRoadAndYearAndMonth(@RequestBody PriceWrapper request){
+        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(),request.getDestiny());
+        Cabin cabin = cabinService.findByName(request.getCabin());
         CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
-        if(road!=null && cabin!=null && cabinsForRoad!=null){
-            List<Prices> prices = pricesService.findPricesByCabinsforroad(cabinsForRoad);
-            if(prices.size()>0){
-                return new ResponseEntity<>(prices, HttpStatus.OK);
+        if(road!=null && cabin!=null && cabinsForRoad!=null)
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(request.getTraveldate(), formatter);
+            Prices prices = pricesService.findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(cabinsForRoad, date);
+
+            if(prices!=null){
+                return new ResponseEntity<>(prices,HttpStatus.OK);
             }
-            else
-            {
+            else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @GetMapping("/{origin}/{destiny}/{cabin}/{traveldate}")
-    public @ResponseBody ResponseEntity<Prices> GetPricesByRoadAndYearAndMonth(@PathVariable ("origin") String origin,
-                                                                               @PathVariable ("destiny") String destiny,
-                                                                               @PathVariable ("cabin") String cabinname,
-                                                                               @PathVariable ("traveldate") String traveldate){
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(origin, destiny);
-        Cabin cabin = cabinService.findByName(cabinname);
-        CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road,cabin);
-        if(road!=null && cabin!=null && cabinsForRoad!=null){
-            try{
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate date = LocalDate.parse(traveldate, formatter);
-                Prices prices = pricesService.findByCabinsforroadAndFromdateGreaterThanEqualAndTodateLessThanEqual(cabinsForRoad, date);
-
-                if(prices!=null){
-                    return new ResponseEntity<>(prices,HttpStatus.OK);
-                }
-                else{
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-                }
-            }
-            catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         else{

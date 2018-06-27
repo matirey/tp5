@@ -18,17 +18,12 @@ public class CabinsForRoadService {
     @Autowired
     private CabinsForRoadRepository repository;
 
-    public List<CabinsForRoad> findCabinsForRoadByRoad(Road road){
-        return repository.findCabinsForRoadByRoad(road);
-    }
-
-    public CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabin cabin)
-    {
+    public CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabin cabin) {
         return repository.findCabinsForRoadByRoadAndCabin(road, cabin);
     }
 
-    public List<CabinsForRoad> findAll(){
-        return repository.findAll();
+    public List<CabinsForRoad> findCabinsForRoadByRoad(Road road){
+        return repository.findCabinsForRoadsByRoad(road);
     }
 
     public void save(Cabin cabin, Road road){
@@ -38,8 +33,8 @@ public class CabinsForRoadService {
         repository.save(cabinsForRoad);
     }
 
-    public void delete(CabinsForRoad cabinsforroad)
+    /*public void delete(CabinsForRoad cabinsforroad)
     {
         repository.delete(cabinsforroad);
-    }
+    }*/
 }

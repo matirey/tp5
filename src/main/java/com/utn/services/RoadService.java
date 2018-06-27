@@ -35,10 +35,10 @@ public class RoadService {
         repository.save(road);
     }
 
-    public void delete(Road road)
+    /*public void delete(Road road)
     {
         repository.delete(road);
-    }
+    }*/
 
     public void save(Airport origin, Airport destiny){
         Road road = new Road();
