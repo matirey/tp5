@@ -5,6 +5,7 @@ import com.utn.controllers.CabinController;
 import com.utn.controllers.CabinsForRoadController;
 import com.utn.models.*;
 import com.utn.services.CabinsForRoadService;
+import com.utn.services.RoadService;
 import com.utn.wrappers.CabinsForRoadWrapper;
 import com.utn.wrappers.RoadWrapper;
 import org.junit.Before;
@@ -18,6 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -35,6 +39,9 @@ public class CabinsForRoadControllerTest {
     @Mock
     private CabinsForRoadService service;
 
+    @Mock
+    private RoadService roadService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -46,31 +53,50 @@ public class CabinsForRoadControllerTest {
     private Airport airport = new Airport(1L, "Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city);
     private Airport airport2 = new Airport(2L, "Aeroparque Internacional Jorge Newbery", "AEP", -34.5580305, -58.4170088, city2);
 
-    // GET ALL BY ROAD AND CABIN
+    // GET ALL BY ROAD
     @Test
-    public void GetAllByRoadAndCabin() {
+    public void GetAllByRoad() {
         Cabin cabin = new Cabin(1L, "economica");
-        Road road = new Road(1L, 323L, airport, airport2);
-        CabinsForRoad cabinsForRoad = new CabinsForRoad(1L, cabin, road);
-        RoadWrapper wrapper = new RoadWrapper(airport.getIataCode(),airport2.getIataCode());
-        CabinsForRoadWrapper cabinsForRoadwrapper = new CabinsForRoadWrapper(cabin.getName(), road.getAirportorigin().getIataCode(),
-                road.getAirportdestiny().getIataCode());
-
-        when(service.findCabinsForRoadByRoadAndCabin(road, cabin)).thenReturn(cabinsForRoad);
-        ResponseEntity response = controller.GetCabinsForRoadByRoadAndCabin(wrapper, cabin.getName());
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(((CabinsForRoad) response.getBody()).getCabin().getName(), cabinsForRoadwrapper.getCabin());
-        assertEquals(((CabinsForRoad) response.getBody()).getRoad().getAirportorigin().getIataCode(), cabinsForRoadwrapper.getOrigin());
-        assertEquals(((CabinsForRoad) response.getBody()).getRoad().getAirportdestiny().getIataCode(), cabinsForRoadwrapper.getDestiny());
+        Road road = new Road(3L, 323L, airport, airport2);
+        List<CabinsForRoad> list = new ArrayList<>();
+        list.add(new CabinsForRoad(4L, cabin, road));
+        List<CabinsForRoad> list2 = new ArrayList<>();
+        list2.add(new CabinsForRoad(4L, cabin, road));
+        RoadWrapper wrapper = new RoadWrapper(airport.getIataCode(), airport2.getIataCode());
+        when(service.findCabinsForRoadByRoad(road)).thenReturn(list);
+        when(roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(wrapper.getOrigin(), wrapper.getDestiny()))
+                .thenReturn(road);
+        ResponseEntity response = controller.findCabinsForRoadByRoad(wrapper);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(list2.size(), list.size());
+        assertEquals(list2.get(0).getCabin().getName(), list.get(0).getCabin().getName());
+        assertEquals(list2.get(0).getRoad().getAirportdestiny().getIataCode(), list.get(0).getRoad().getAirportdestiny().getIataCode());
     }
 
-    /*// GET ALL EMPTY
+    //GET ALL EMPTY
     @Test
     public void GetAllByRoadEmpty() {
         List<CabinsForRoad> list = new ArrayList<>();
+        Road road = new Road(3L, 323L, airport, airport2);
+        RoadWrapper wrapper = new RoadWrapper(airport.getIataCode(), airport2.getIataCode());
         when(service.findCabinsForRoadByRoad(road)).thenReturn(list);
-        ResponseEntity response = controller.GetCabinsForRoadByRoad(wrapper);
+        ResponseEntity response = controller.findCabinsForRoadByRoad(wrapper);
         assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
-    }*/
+    }
+
+    @Test
+    public void GetAllByRoadServerError(){
+        Cabin cabin = new Cabin(1L, "economica");
+        Road road = new Road(3L, 323L, airport, airport2);
+        List<CabinsForRoad> list = new ArrayList<>();
+        list.add(new CabinsForRoad(4L, cabin, road));
+        RoadWrapper wrapper= new RoadWrapper(airport.getIataCode(),airport2.getIataCode());
+        when(roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(wrapper.getOrigin(),wrapper.getDestiny()))
+        .thenReturn(road);
+        when(service.findCabinsForRoadByRoad(road)).thenThrow(Exception.class);
+        ResponseEntity response = controller.findCabinsForRoadByRoad(wrapper);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+
+    }
 
 }

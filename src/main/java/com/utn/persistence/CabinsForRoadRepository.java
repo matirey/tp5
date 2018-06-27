@@ -15,4 +15,6 @@ import java.util.List;
 public interface CabinsForRoadRepository extends CrudRepository<CabinsForRoad, Long> {
 
     CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabin cabin);
+
+    List<CabinsForRoad> findCabinsForRoadsByRoad(Road road);
 }

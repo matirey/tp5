@@ -18,9 +18,12 @@ public class CabinsForRoadService {
     @Autowired
     private CabinsForRoadRepository repository;
 
-    public CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabin cabin)
-    {
+    public CabinsForRoad findCabinsForRoadByRoadAndCabin(Road road, Cabin cabin) {
         return repository.findCabinsForRoadByRoadAndCabin(road, cabin);
+    }
+
+    public List<CabinsForRoad> findCabinsForRoadByRoad(Road road){
+        return repository.findCabinsForRoadsByRoad(road);
     }
 
     public void save(Cabin cabin, Road road){

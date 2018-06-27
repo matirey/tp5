@@ -1,6 +1,5 @@
 package com.utn.controllers;
 
-import com.utn.models.Cabin;
 import com.utn.models.Road;
 import com.utn.models.CabinsForRoad;
 import com.utn.services.CabinService;
@@ -42,24 +41,28 @@ public class CabinsForRoadController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @PostMapping(value="", produces = "application/json")
-    public @ResponseBody ResponseEntity<CabinsForRoad> GetCabinsForRoadByRoadAndCabin(@RequestBody RoadWrapper request,
-                                                                                      @PathVariable ("cabin") String cabinName){
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny());
-        Cabin cabin = cabinService.findByName(cabinName);
-        if(road!=null && cabin!=null){
-            CabinsForRoad cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoadAndCabin(road, cabin);
+    /**
+     * Post -> roadwrapper
+     * {
+     *     origin : origin_iatacode,
+     *     destiny : destiny_iatacode,
+     * }
+     */
+    @PostMapping(value="",consumes = "application/json", produces = "application/json")
+    public @ResponseBody ResponseEntity <List<CabinsForRoad>>findCabinsForRoadByRoad(@RequestBody RoadWrapper request){
             try{
-                return new ResponseEntity<>(cabinsForRoad, HttpStatus.CREATED);
+                Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny());
+                if (road!=null){
+                    List<CabinsForRoad> cabinsForRoad= cabinsForRoadService.findCabinsForRoadByRoad(road);
+                    return new ResponseEntity<>(cabinsForRoad, HttpStatus.OK);
+                }
+                else{
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                }
             }
             catch (Exception e){
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
     }
 
 }
