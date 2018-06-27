@@ -77,7 +77,7 @@ public class RoadController {
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
             else{
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
         catch (Exception e){

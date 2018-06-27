@@ -24,6 +24,7 @@ public class CabinController {
     public ResponseEntity SaveCabin(@RequestBody CabinWrapper request){
         try{
             cabinService.save(request.getName());
+            cabinService.findByName(request.getName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         catch (Exception e){

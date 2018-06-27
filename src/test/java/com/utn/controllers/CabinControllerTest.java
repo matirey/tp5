@@ -1,23 +1,20 @@
-package com.utn;
+package com.utn.controllers;
 
+import com.utn.Tp5Application;
 import com.utn.controllers.CabinController;
-import com.utn.controllers.CabinsForRoadController;
 import com.utn.models.Cabin;
-import com.utn.models.CabinsForRoad;
-import com.utn.models.Road;
 import com.utn.services.CabinService;
-import com.utn.services.CabinsForRoadService;
-import com.utn.services.CabinsForRoadService;
 import com.utn.wrappers.CabinWrapper;
-import com.utn.wrappers.CabinsForRoadWrapper;
-import com.utn.wrappers.CabinsForRoadWrapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +25,15 @@ import static org.junit.Assert.*;
 /**
  * Created by Marcosp on 26/6/2018.
  */
-public class CabinsForRoadControllerTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Tp5Application.class)
+public class CabinControllerTest {
 
     @InjectMocks
-    private CabinsForRoadController controller;
+    private CabinController controller;
 
     @Mock
-    private CabinsForRoadService service;
+    private CabinService service;
 
     @Before
     public void setup() {
@@ -67,6 +66,23 @@ public class CabinsForRoadControllerTest {
         when(service.findAll()).thenReturn(list);
         ResponseEntity response = controller.findAll();
         assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
+    }
+
+    // Put
+    @Test
+    public void Put() {
+        CabinWrapper Wrapper = new CabinWrapper("economica");
+        ResponseEntity response = controller.SaveCabin(Wrapper);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    }
+
+    // Put Server Error
+    @Test
+    public void PutServerError() {
+        CabinWrapper Wrapper = new CabinWrapper("economica");
+        when(service.findByName("economica")).thenThrow(Exception.class);
+        ResponseEntity response = controller.SaveCabin(Wrapper);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
 }

@@ -1,5 +1,6 @@
-package com.utn;
+package com.utn.controllers;
 
+import com.utn.Tp5Application;
 import com.utn.controllers.AirportController;
 import com.utn.models.Airport;
 import com.utn.models.City;
@@ -9,11 +10,14 @@ import com.utn.services.CityService;
 import com.utn.wrappers.AirportWrapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,8 @@ import static org.junit.Assert.*;
 /**
  * Created by Marcosp on 25/6/2018.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Tp5Application.class)
 public class AirportControllerTest {
 
     @Mock
@@ -46,7 +52,7 @@ public class AirportControllerTest {
 
     // GET BY IATACODE
     @Test
-    public void GetByIataCode() {
+    public void GetByIataCodeTest() {
         Airport airport = new Airport(1L, "Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city);
         AirportWrapper wrapper = new AirportWrapper("Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city.getIataCode());
 
@@ -62,7 +68,7 @@ public class AirportControllerTest {
 
     // GET BY IATACODE EMPTY
     @Test
-    public void GetByIataCodeEmpty() {
+    public void findAirportByIataCodeEmptyTest() {
         when(service.findByIataCode("")).thenReturn(null);
         ResponseEntity response = controller.findAirportByIataCode("");
         assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
@@ -70,7 +76,7 @@ public class AirportControllerTest {
 
     // GET ALL
     @Test
-    public void GetAll() {
+    public void findAllTest() {
         List<Airport> list = new ArrayList<>();
         list.add(new Airport(1L, "Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city));
         list.add(new Airport(2L, "Aeroparque Internacional Jorge Newbery", "AEP", -34.5580305, -58.4170088, city2));
@@ -96,29 +102,23 @@ public class AirportControllerTest {
         assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
     }
 
-    // POST
+    // Put
     @Test
-    public void Post() {
+    public void Put() {
         AirportWrapper wrapper = new AirportWrapper("Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city.getIataCode());
-        Airport airport = new Airport(1L, "Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city);
-        when(service.findByIataCode(any(String.class))).thenReturn(null);
-        when(cityService.findCityByIataCode(any(String.class))).thenReturn(city);
-        //service.save(airport);
         ResponseEntity response = controller.SaveAirport(wrapper);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
-    // POST SERVER ERROR
-    /*@Test
-    public void PostInternalServerError() {
-        when(service.save(any(Airport.class))).thenReturn(ConstraintViolationException.class);
-        try {
-            controller.SaveAirport(new AirportWrapper("Aeropuerto Internacional Astor Piazolla", "MDQQ",-37.9332052, -57.5815181, city.getIataCode()));
 
-            Assert.fail();
-        } catch (Exception e) {
-            assertTrue(e.getMessage(),true);
-        }
-    }*/
+    // Put Server Error
+    @Test
+    public void PutServerError() {
+        AirportWrapper wrapper = new AirportWrapper("Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city.getIataCode());
+        Airport airport = new Airport(1L, "Aeropuerto Internacional Astor Piazolla", "MDQ", -37.9332052, -57.5815181, city);
+        when(cityService.findCityByIataCode(city.getIataCode())).thenThrow(Exception.class);
+        ResponseEntity response = controller.SaveAirport(wrapper);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
 
 }

@@ -44,25 +44,6 @@ public class CabinsForRoadController {
     }
 
     @PostMapping(value="", produces = "application/json")
-    public @ResponseBody ResponseEntity<List<CabinsForRoad>> GetCabinsForRoadByRoad(@RequestBody RoadWrapper request){
-
-        Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny());
-        if(road!=null){
-            List<CabinsForRoad> cabinsForRoad = cabinsForRoadService.findCabinsForRoadByRoad(road);
-            if(cabinsForRoad.size()>0){
-                return new ResponseEntity<>(cabinsForRoad, HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @GetMapping(value="/{cabin}", produces = "application/json")
     public @ResponseBody ResponseEntity<CabinsForRoad> GetCabinsForRoadByRoadAndCabin(@RequestBody RoadWrapper request,
                                                                                       @PathVariable ("cabin") String cabinName){
         Road road = roadService.findRoadByAirportorigin_IataCodeAndAirportdestiny_IataCode(request.getOrigin(), request.getDestiny());
